@@ -1,0 +1,67 @@
+#showContent{
+    display: flex;
+    justify-content: center;
+    
+    height: 94vh;
+}
+
+.selectedMovie{
+width: 600px;
+margin: 0;
+}
+
+#content-movie{
+    display: block;
+    width: 100%;
+}
+
+#content-movie h2 { 
+    color: black; 
+    font-family: 'Raleway',sans-serif; 
+    font-size: 62px; 
+    font-weight: 600; 
+    line-height: 72px; 
+    margin: 10px; 
+    text-align: right; 
+    padding: 0;
+}
+#content-movie img{
+    width: 350px;
+    height: 500px;
+    display: flex;
+    margin: auto;
+}
+
+.movie-info {
+    display: inline-block;
+    padding: 10px;
+    background-color: white;
+    border: 2px black solid;
+    margin: 0;
+}
+
+
+
+.movie-info p{
+    margin-top: 10px;
+    
+}
+
+#showDates{
+    padding: 2rem;
+    height: fit-content;
+    margin-top: 4rem;
+    
+
+}
+
+#showDates h2{
+    font-size: 16px;
+    padding: 5px;
+
+}
+
+#showDates a{
+    font-size: smaller;
+    
+}
