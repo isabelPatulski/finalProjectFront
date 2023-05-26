@@ -14,33 +14,24 @@ async function login() {
     const credentials = {}
     credentials.email = document.getElementById("email").value
     credentials.password = document.getElementById("password").value
+    var emailFormat = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
+
+    if(credentials.password ==''){
+      alert("Password field can not be empty!");
+    }
+    
 
     fetch(URL, makeOptions("POST", credentials))
         .then(res => handleErrors(res))
-        .then(newCustomer => {
-            document.getElementById("btn-login").innerText = JSON.stringify(newCustomer)
+        .then(newUser => {
+            document.getElementById("btn-login").innerText = JSON.stringify(newUser)
         })
-        .catch(error => console.error(error))
+        .catch(error => {console.error("error"),
+        alert("Wrong password or email")})
+
+        
 }
-    
-    
-    
-    
-    /*fetch('http://localhost:8080/api/auth',
-    { method:postMessage,
-    body: JSON.stringify({
-        email: 'fln@dfsfd.dk',
-        password: '1234'}),
-        headers: {
-            'Content-type': 'application/JSON; charset=UTF-8',
-        }
-    });
-    fetch(options)
-        .then(res => handleErrors(res))
-        .then(credentials => {
-            document.getElementById("btn-register").innerText = JSON.stringify(credentials)
-        })
-        .catch(error => console.error(error))*/
+
 
 
 

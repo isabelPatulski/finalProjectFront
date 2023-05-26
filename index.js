@@ -4,6 +4,7 @@ import { movieMethods } from "./js-pages/movies/movies.js"
 import { showingsMethods} from "./js-pages/showings/showings.js"
 import {setupRegisterHandlers} from "./js-pages/register/register.js"
 import { setupLoginHandlers } from "./js-pages/login/login.js"
+import {showMenu} from "./js-pages/home/menu.js"
 
 
 window.addEventListener("load", async () => {
@@ -16,17 +17,22 @@ window.addEventListener("load", async () => {
   const templateConfirmed = await loadTemplate("./js-pages/confirmed/confirmed.html")
 
   const router = new Navigo("/", { hash: true });
+
+  showMenu()
+  
   adjustForMissingHash()
   router
     .hooks({
       before(done, match) {
         setActiveLink("menu", match.url)
+        console.log("testetst")
         done()
       }
     })
 
     .on("/", () => {
       renderTemplate(templateHome, "content")
+      console.log ("test")
     })
 
 
@@ -64,6 +70,7 @@ window.addEventListener("load", async () => {
 
     })
 
-    });   
+
+  });   
 
   window.onerror = (e) => alert(e)

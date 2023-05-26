@@ -2,7 +2,7 @@ import { handleErrors } from "../../fetchUtils.js"
 import {LOCAL_SERVER_URL} from "../../settings.js";
 //Refactor into a separate settings file, if used also in other files
 
-const SERVER_URL = LOCAL_SERVER_URL + "/customers"
+const SERVER_URL = LOCAL_SERVER_URL + "/users"
 
 
 export async function fetchData() {
