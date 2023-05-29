@@ -24,19 +24,17 @@ export function getAllIngredients(){
 function makeRows(rows){
   const trows = rows.map(ingredients=> `
   <tr class="rows-with-ingredients">
-  <td><button id="btn-edit-ingredient" type="button" class="editButton" >Edit</button><td>
-  <td> ${ingredients.id} </td>
   <td> ${ingredients.name} </td>
   <td> ${ingredients.price} </td>
-  <td><button id="btn-delete-ingredien" type="button" class="deleteButton">Delete</button><td>
+  <td><button id="btn-delete-ingredien" type="button" class="deleteButton">Delete</button></td>
   </tr>
   `).join("\n")
   document.getElementById("ingredients-rows").innerHTML = trows
 }
 
-export function addIngredientElement(){
-    document.getElementById("btn-add-ingredient").onclick = addIngredient
-}
+//export function addIngredientElement(){
+  //  document.getElementById("page-addIngredient").onclick = addIngredient
+//}
 
 function addIngredient(){
 const ingredient = {}
@@ -49,4 +47,12 @@ fetch(URL, makeOptions("POST", ingredient))
         document.getElementById("ingredient-info-all").innerText = JSON.stringify(newIngredient)
     })
     .catch(error => console.error(error))
+}
+
+export function showIngredientForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+export function hideIngredientForm() {
+  document.getElementById("myForm").style.display = "none";
 }

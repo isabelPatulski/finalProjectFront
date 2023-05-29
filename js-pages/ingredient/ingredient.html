@@ -1,22 +1,32 @@
 
 <template>
 <form id="showContent">
-        <div id="ingredient-menu" style="display: block; margin-bottom: 1em;">
-          <a id="page-allIngredients" href="#" onclick="seeIngredient()" >All ingredients</a>
-          <a id="page-addIngredient" href="#" onclick="addIngredient()" >Add ingredient</a>
-          <div class="search-container">
-            <input class="ingredient-search" id="ingredient-search" type="search" placeholder="Search..">
-          </div>
+       <div id="ingredient-menu" style="display: block; margin-bottom: 1em;">   
+        <button class="open-button" onclick="showIngredientForm()">Add ingredient</button>
+        <div class="form-popup" id="myForm">
+          <form action="/action_page.php" class="form-container">
+            <h1>Add new ingredient</h1>
+        
+            <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter name" name="name" required>
+        
+            <label for="price"><b>Price</b></label>
+            <input type="number" placeholder="Enter price" name="price" required>
+        
+            <button type="submit" class="btn">Add</button>
+            <button type="button" class="btn cancel" onclick="hideIngredientForm()">Close</button>
+          </form>
         </div>
+              </div>
 <div class="ingredients_content" id="seeIngredient" style="display: block">
     <h3 id="ingredients-header">
       <span>All ingredients</span>
-      <input type="search" placeholder="Search.." class="people-search" id="search-input-ingredients" data-table="ingredients-table">
+    <!--  <input type="search" placeholder="Search.." class="ingredient-search" id="search-input-ingredients" data-table="ingredients-table">-->
+
     </h3>
-    <table class="ingredients-table">
+    <table class="ingredients-rows">
       <thead>
         <tr>
-          <th>Id</th>
           <th>Name</th>
           <th>Price</th>
         </tr>

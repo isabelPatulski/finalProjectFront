@@ -5,7 +5,8 @@ import {showingsMethods} from "./js-pages/showings/showings.js"
 import {setupRegisterHandlers} from "./js-pages/register/register.js"
 import {setupLoginHandlers } from "./js-pages/login/login.js"
 import {showMenu} from "./js-pages/home/menu.js"
-import {addIngredientElement, getAllIngredients} from "./js-pages/ingredient/ingredient.js"
+import {getAllIngredients, hideIngredientForm, 
+  showIngredientForm} from "./js-pages/ingredient/ingredient.js"
 
 
 window.addEventListener("load", async () => {
@@ -74,8 +75,9 @@ window.addEventListener("load", async () => {
 
     .on( "/ingredients", () => {
       renderTemplate(templateIngredients,"content")
-      addIngredientElement()
-      getAllIngredients()
+      showIngredientForm()
+      hideIngredientForm()
+      getAllIngredients()    
 
     })
 
