@@ -32,9 +32,9 @@ function makeRows(rows){
   document.getElementById("ingredients-rows").innerHTML = trows
 }
 
-//export function addIngredientElement(){
-  //  document.getElementById("page-addIngredient").onclick = addIngredient
-//}
+export function addIngredientElement(){
+    document.getElementById("saveNewIngredient").onclick = addIngredient
+}
 
 function addIngredient(){
 const ingredient = {}
@@ -44,15 +44,23 @@ ingredient.price = document.getElementById("input-price").value
 fetch(URL, makeOptions("POST", ingredient))
     .then(res => res.json())
     .then(newIngredient => {
-        document.getElementById("ingredient-info-all").innerText = JSON.stringify(newIngredient)
+        document.getElementById("saveNewIngredient").innerText = JSON.stringify(newIngredient)
     })
     .catch(error => console.error(error))
 }
 
-export function showIngredientForm() {
+export async function setupIngredientFormHandlers() {
+  const addButton = document.getElementById("open-button");
+  const closeButton = document.getElementById("btnCancel");
+
+  addButton.addEventListener("click", showIngredientForm);
+  closeButton.addEventListener("click", hideIngredientForm);
+}
+
+function showIngredientForm() {
   document.getElementById("myForm").style.display = "block";
 }
 
-export function hideIngredientForm() {
+function hideIngredientForm() {
   document.getElementById("myForm").style.display = "none";
 }

@@ -2,19 +2,19 @@
 <template>
 <form id="showContent">
        <div id="ingredient-menu" style="display: block; margin-bottom: 1em;">   
-        <button class="open-button" onclick="showIngredientForm()">Add ingredient</button>
+        <button class="open-button" id="open-button" >Add ingredient</button>
         <div class="form-popup" id="myForm">
           <form action="/action_page.php" class="form-container">
             <h1>Add new ingredient</h1>
         
             <label for="name"><b>Name</b></label>
-            <input type="text" placeholder="Enter name" name="name" required>
+            <input type="text" id="input-name" placeholder="Enter name" name="name" required>
         
             <label for="price"><b>Price</b></label>
-            <input type="number" placeholder="Enter price" name="price" required>
+            <input type="number" id="input-price" placeholder="Enter price" name="price" required>
         
-            <button type="submit" class="btn">Add</button>
-            <button type="button" class="btn cancel" onclick="hideIngredientForm()">Close</button>
+            <button type="submit" id="saveNewIngredient" class="btn">Login</button>
+            <button type="button" id="btnCancel" class="btn cancel">Close</button>
           </form>
         </div>
               </div>
