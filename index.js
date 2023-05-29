@@ -1,10 +1,11 @@
 import "https://unpkg.com/navigo"  //Will create the global Navigo object used below
-import { setActiveLink, loadTemplate, renderTemplate, adjustForMissingHash } from "./utils.js"
-import { movieMethods } from "./js-pages/movies/movies.js"
-import { showingsMethods} from "./js-pages/showings/showings.js"
+import {setActiveLink, loadTemplate, renderTemplate, adjustForMissingHash } from "./utils.js"
+import {movieMethods } from "./js-pages/movies/movies.js"
+import {showingsMethods} from "./js-pages/showings/showings.js"
 import {setupRegisterHandlers} from "./js-pages/register/register.js"
-import { setupLoginHandlers } from "./js-pages/login/login.js"
+import {setupLoginHandlers } from "./js-pages/login/login.js"
 import {showMenu} from "./js-pages/home/menu.js"
+import {addIngredientElement, getAllIngredients} from "./js-pages/ingredient/ingredient.js"
 
 
 window.addEventListener("load", async () => {
@@ -15,6 +16,7 @@ window.addEventListener("load", async () => {
   const templateSeats = await loadTemplate("./js-pages/selectSeat/selectSeat.html")
   const templateShowings = await loadTemplate("./js-pages/showings/showings.html")
   const templateConfirmed = await loadTemplate("./js-pages/confirmed/confirmed.html")
+  const templateIngredients = await loadTemplate("./js-pages/ingredient/ingredient.html")
 
   const router = new Navigo("/", { hash: true });
 
@@ -67,6 +69,13 @@ window.addEventListener("load", async () => {
     .on( "/register", () => {
       renderTemplate(templateRegister,"content")
       setupRegisterHandlers()
+
+    })
+
+    .on( "/ingredients", () => {
+      renderTemplate(templateIngredients,"content")
+      addIngredientElement()
+      getAllIngredients()
 
     })
 
