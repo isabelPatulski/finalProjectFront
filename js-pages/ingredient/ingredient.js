@@ -3,34 +3,58 @@ import {handleErrors, makeOptions} from "../../fetchUtils.js";
 
 const URL = LOCAL_SERVER_URL+"api/ingredients"
 
-let allIngredients = []
-
 export function getAllIngredients(){
-  if(allIngredients.length > 0){
-    makeRows(allIngredients)
-    return
-  } 
   fetch(URL)
   .then(res=>res.json())
   .then(ingredients=>{
     
     makeRows(ingredients)
-    allIngredients = ingredients
-    console.log(ingredients)
+    
   })
   .catch(e=>console.error(e))
 }
 
-function makeRows(rows){
-  const trows = rows.map(ingredients=> `
-  <tr class="rows-with-ingredients">
-  <td> ${ingredients.name} </td>
-  <td> ${ingredients.price} </td>
-  <td><button id="btn-delete-ingredien" type="button" class="deleteButton">Delete</button></td>
-  </tr>
-  `).join("\n")
-  document.getElementById("ingredients-rows").innerHTML = trows
+let deleteButtonId = 1; 
+
+function makeRows(rows) {
+  const trows = rows.map(ingredients => {
+    const deleteButtonIdString = `btn-delete-ingredient-${deleteButtonId}`;
+    deleteButtonId++; // Increment the counter for the next ID
+
+    return `
+      <tr class="rows-with-ingredients">
+        <td>${ingredients.name}</td>
+        <td>${ingredients.price}</td>
+        <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
+      </tr>
+    `;
+  }).join("\n");
+  document.getElementById("ingredients-rows").innerHTML = trows;
+
+  document.getElementById("ingredients-rows").addEventListener("click", handleDelete);
 }
+
+export async function handleDelete(event) {
+  if (event.target.nodeName === "INPUT" && event.target.type === "button") {
+    const buttonId = event.target.id;
+    const row = event.target.parentNode.parentNode;
+    const ingredientName = row.querySelector("td:first-child").textContent;
+
+    try {
+      const response = await fetch(`${URL}/${encodeURIComponent(ingredientName)}`, makeOptions("DELETE"));
+      console.log(response); // Log the response for debugging
+
+      if (response.ok) {
+        row.remove();
+      } else {
+        throw new Error("Delete request failed");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+}
+
 
 export function addIngredientElement(){
     document.getElementById("saveNewIngredient").onclick = addIngredient
@@ -64,3 +88,5 @@ function showIngredientForm() {
 function hideIngredientForm() {
   document.getElementById("myForm").style.display = "none";
 }
+
+

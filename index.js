@@ -5,7 +5,7 @@ import {showingsMethods} from "./js-pages/showings/showings.js"
 import {setupRegisterHandlers} from "./js-pages/register/register.js"
 import {setupLoginHandlers } from "./js-pages/login/login.js"
 import {showMenu} from "./js-pages/home/menu.js"
-import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers} from "./js-pages/ingredient/ingredient.js"
+import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers, handleDelete} from "./js-pages/ingredient/ingredient.js"
 
 
 
@@ -78,9 +78,11 @@ window.addEventListener("load", async () => {
       getAllIngredients()    
       setupIngredientFormHandlers()
       addIngredientElement()
-    })
+      handleDelete()
+        })
 
 
-  });   
+  });
+     
 
   window.onerror = (e) => alert(e)
