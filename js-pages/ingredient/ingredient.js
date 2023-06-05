@@ -68,7 +68,7 @@ ingredient.price = document.getElementById("input-price").value
 fetch(URL, makeOptions("POST", ingredient))
     .then(res => res.json())
     .then(newIngredient => {
-        document.getElementById("saveNewIngredient").innerText = JSON.stringify(newIngredient)
+      document.getElementById("saveNewIngredient").innerText = JSON.stringify(newIngredient)
     })
     .catch(error => console.error(error))
 }
@@ -81,7 +81,9 @@ export async function setupIngredientFormHandlers() {
   closeButton.addEventListener("click", hideIngredientForm);
 }
 
-function showIngredientForm() {
+function showIngredientForm(event) {
+  event.preventDefault(); // Prevent form submission and page refresh
+
   document.getElementById("myForm").style.display = "block";
 }
 

@@ -1,0 +1,77 @@
+<template>
+  <form id="showContent">
+  <html>
+  <head>
+    <title>Recipe App</title>
+	<link rel="stylesheet" href="recipe.css">
+  </head>
+  <body>
+    <nav>
+	  <h1>Recipe App</h1>
+    </nav>
+    <div class="container">
+	   <!-- Add recipes form -->
+       <div class="left-column">
+        <h3>Add Recipe</h3>
+        <form>
+          <label for="recipe-name">Name:</label>
+          <input type="text" id="recipe-name" required>
+          <br>
+          <label for="recipe-mealtype">Mealtype:</label>
+          <select name="mealTypes" id="mealTypes" required>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Dessert">Dessert</option>
+          </select>
+          <br>
+          <label for="recipe-description">Description:</label>
+          <textarea id="recipe-description" rows="5" required></textarea>
+          <br>
+          <button id= "addRecipe" type="submit">Add Recipe</button>
+        </form>
+      </div>
+	  <!-- Search bar/view recipes list -->
+    <div class="right-column" id="seeRecipes" style="display: block">
+      <h3 id="recipe-header">
+        <span>All recipes</span>
+      <!--  <input type="search" placeholder="Search.." class="ingredient-search" id="search-input-ingredients" data-table="ingredients-table">-->
+      </h3>
+      <table class="recipe-rows">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Mealtype</th>
+          </tr>
+        </thead>
+        <tbody id="recipe-list">
+        </tbody>
+      </table>
+    </div>
+  </form>
+</template>
+
+
+	 <!-- <div table class="right-column">
+		<div id="search-section">
+          <h3>Recipes List</h3>
+          <label for="search-box">Search:</label>
+          <input type="text" id="search-box">
+        </div>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Mealtype</th>
+          </tr>
+        </thead>
+        <div id="recipe-list"></div>
+      </div>
+    </div>
+  </body>
+</html>
+</template> -->
+
