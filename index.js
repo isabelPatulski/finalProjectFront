@@ -5,6 +5,7 @@ import {setupLoginHandlers } from "./js-pages/login/login.js"
 import {showMenu} from "./js-pages/home/menu.js"
 import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers, handleDelete} from "./js-pages/ingredient/ingredient.js"
 import {getAllRecipes, addRecipeElement } from "./js-pages/recipe/recipe.js"
+import { getAllRecipeLines } from "./js-pages/recipeLine/recipeLine.js"
 
 
 
@@ -14,6 +15,7 @@ window.addEventListener("load", async () => {
   const templateConfirmed = await loadTemplate("./js-pages/confirmed/confirmed.html")
   const templateIngredients = await loadTemplate("./js-pages/ingredient/ingredient.html")
   const templateRecipe = await loadTemplate ("./js-pages/recipe/recipe.html")
+  const templateRecipeLine = await loadTemplate("./js-pages/recipeLine/recipeLine.html")
 
   const router = new Navigo("/", { hash: true });
 
@@ -63,6 +65,12 @@ window.addEventListener("load", async () => {
       renderTemplate(templateRecipe, "content")
       getAllRecipes()
       addRecipeElement()
+
+    })
+
+    .on( "recipeLine", () => {
+      renderTemplate(templateRecipeLine, "content")
+      getAllRecipeLines()
 
     })
 

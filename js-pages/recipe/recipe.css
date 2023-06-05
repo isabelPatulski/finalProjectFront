@@ -1,3 +1,35 @@
+#showContent{
+  display: flex;
+  justify-content: center;
+  height: 94vh;
+}
+
+#recipe-rows {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+#recipe-rows td, #recipe-rows th {
+  border: 1px solid #ddd;
+  padding: 8px;
+
+}
+
+#recipe-rows tr:nth-child(even){background-color: #f2f2f2;}
+
+
+#recipe-rows th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+
+
+}
+
 body {
     font-family: sans-serif;
   }
@@ -55,41 +87,12 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+  }  
   
-  /* Styling for list of recipes */
-  #recipe-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 20px;
-  }
-  
-  
-  /* styling for single recipe div */
-  .recipe {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,.2);
-  }
-  
-  .recipe h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-  }
-  
-  .recipe ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  
-  .recipe ul li {
-    margin-bottom: 5px;
-  }
+ 
   
   /* Delete button styling */
-  .delete-button {
+  /*.delete-button {
     background-color: #dc3545;
     color: #fff;
     border: none;
@@ -102,7 +105,7 @@ body {
     background-color: #c82333;
   }
   
-  /* Search label styling */
+  /* Search label styling 
   label[for="search-box"] {
     display: block;
     margin-bottom: 10px;
