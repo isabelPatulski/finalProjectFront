@@ -19,6 +19,30 @@
 
 #recipe-rows tr:nth-child(even){background-color: #f2f2f2;}
 
+.recipe-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recipe-table th,
+.recipe-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.recipe-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.recipe-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.recipe-table tr:hover {
+  background-color: #e5e5e5;
+  cursor: pointer;
+}
 
 #recipe-rows th {
   padding-top: 12px;
@@ -28,6 +52,12 @@
   color: white;
 
 
+}
+
+.recipe-link:hover {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
 }
 
 body {

@@ -63,7 +63,7 @@ window.addEventListener("load", async () => {
         
     })
 
-    .on( "recipe", () => {
+    .on( "/recipe", () => {
       renderTemplate(templateRecipe, "content")
       getAllRecipes()
       addRecipeElement()
@@ -71,13 +71,13 @@ window.addEventListener("load", async () => {
 
     })
 
-    //on( "recipeDetails", () => {
-      //renderTemplate(templateRecipeDetails, "content")
+    on( "/recipeDetails", () => {
+      renderTemplate(templateRecipeDetails, "content")
       //getRecipeDetails()
 
-    //})
+    })
 
-    .on( "recipeLine", () => {
+    .on( "/recipeLine", () => {
       renderTemplate(templateRecipeLine, "content")
       getAllRecipeLines()
       setupRecipeLineFormHandlers()

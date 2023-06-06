@@ -17,7 +17,7 @@ export function getAllRecipes(){
   function makeRows(rows) {
     const trows = rows.map(recipe => {
       return `
-        <tr class="recipe-rows" data-recipe="${recipe.name}">
+        <tr class="recipe-rows recipe-link" data-recipe="${recipe.name}">
           <td>${recipe.name}</td>
           <td>${recipe.mealType}</td>
           <td>${recipe.description}</td>
@@ -34,10 +34,11 @@ export function getAllRecipes(){
 
   export function handleRecipeRowClick(event) {
     const clickedRow = event.currentTarget;
-    const recipeName = clickedRow.dataset.recipes;
+    const recipeName = clickedRow.dataset.recipe;
     const recipeDetailsURL = `/recipe-details.html?recipe=${encodeURIComponent(recipeName)}`;
     window.location.href = recipeDetailsURL;
   }
+  
 
   export function addRecipeElement(){
     document.getElementById("addRecipe").onclick = addRecipe
