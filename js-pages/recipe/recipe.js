@@ -17,7 +17,7 @@ export function getAllRecipes(){
   function makeRows(rows) {
     const trows = rows.map(recipe => {
       return `
-        <tr class="recipe-rows recipe-link" data-recipe="${recipe.name}">
+        <tr class="recipe-rows recipe-link" data-recipe="${recipe.name}" onclick="handleRecipeRowClick(event)">
           <td>${recipe.name}</td>
           <td>${recipe.mealType}</td>
           <td>${recipe.description}</td>
@@ -28,16 +28,35 @@ export function getAllRecipes(){
   
     const recipeRows = document.getElementsByClassName("recipe-rows");
     Array.from(recipeRows).forEach(row => {
-      row.addEventListener("click", handleRecipeRowClick);
+      row.addEventListener("click", event => handleRecipeRowClick(event));
     });
-  }
+  }  
+  
 
   export function handleRecipeRowClick(event) {
     const clickedRow = event.currentTarget;
     const recipeName = clickedRow.dataset.recipe;
-    const recipeDetailsURL = `/recipe-details.html?recipe=${encodeURIComponent(recipeName)}`;
-    window.location.href = recipeDetailsURL;
+    getRecipeDetails(recipeName);
   }
+
+export function getRecipeDetails(recipeName) {
+  const recipeDetailsURL = `${URL}/${encodeURIComponent(recipeName)}`;
+  const options = makeOptions("GET");
+
+  fetch(recipeDetailsURL, options)
+    .then(handleErrors)
+    .then(res => res.json())
+    .then(recipeDetails => {
+
+      document.getElementById("recipe-name").innerText = recipeDetails.name;
+      document.getElementById("recipe-description").innerText = recipeDetails.description;
+      document.getElementById("meal-type").innerText = recipeDetails.mealType;
+
+    
+    })
+    .catch(error => console.error(error));
+}
+
   
 
   export function addRecipeElement(){

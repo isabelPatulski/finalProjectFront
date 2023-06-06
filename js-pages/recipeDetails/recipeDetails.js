@@ -1,10 +1,16 @@
+import {LOCAL_SERVER_URL} from "../../settings.js"
+import {handleErrors, makeOptions} from "../../fetchUtils.js";
+
+const URL = LOCAL_SERVER_URL+"api/recipes"
+
+
 // Get the recipe name from the URL parameter
 const urlParams = new URLSearchParams(window.location.search);
 const recipeName = urlParams.get("recipe");
 
 // Retrieve the recipe details from the API or any data source
 // and populate the page with the information
-/*export function getRecipeDetails(recipeName) {
+export function getRecipeDetails(recipeName) {
   const recipeDetailsURL = `${URL}/${encodeURIComponent(recipeName)}`;
 
   fetch(recipeDetailsURL)
@@ -24,4 +30,4 @@ const recipeName = urlParams.get("recipe");
 }
 
 // Call the function to retrieve and populate the recipe details
-getRecipeDetails(recipeName);*/
+getRecipeDetails(recipeName);
