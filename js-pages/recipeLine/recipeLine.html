@@ -2,7 +2,32 @@
 <template data-id="page-recipeLine">
 <form id="showContent">
        <div id="ingredient-menu" style="display: block; margin-bottom: 1em;">   
-       
+          <button class="open-button" id="open-button" >Add ingredient</button>
+          <div class="form-popup" id="myForm">
+            <form class="form-container">
+              <h1>Add new recipeLine</h1>
+          
+              <label for="RecipeName"><b>RecipeName</b></label>
+              <input type="text" id="input-recipeName" placeholder="Enter recipeName.." name="recipeName" required>
+          
+              <label for="IngredientName"><b>IngredientName</b></label>
+              <input type="text" id="input-ingredientName" placeholder="Enter ingredient to use.." name="ingredientName" required>
+              <label for="MeasurementType">measurementType:</label>
+                <select name="measurementType" id="input-measurementType" placeholder="Choose mesurementType to use.." required>
+                <option value="LITER">LITER</option>
+                <option value="CUP">CUP</option>
+                <option value="GRAM">GRAM</option>
+                <option value="PCS">PCS</option>
+                <option value="TBS">TBS</option>
+              </select>
+              <label for="Amount"><b>Amount</b></label>
+              <input type="number" id="input-amount" placeholder="Enter amount.." name="amount" required>
+
+
+              <button type="submit" id="saveNewRecipeLine"  class="btn">Add recipeLine</button>
+              <button type="button" id="btnCancel" class="btn cancel">Close</button>
+            </form>
+          </div>       
       </div>
 <div class="ingredients_content" id="seeRecipeLine" style="display: block">
     <h3 id="ingredients-header">

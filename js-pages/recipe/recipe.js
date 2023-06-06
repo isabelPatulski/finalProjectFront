@@ -15,18 +15,28 @@ export function getAllRecipes(){
   }
     
   function makeRows(rows) {
-    const trows = rows.map(recipes => {  
+    const trows = rows.map(recipe => {
       return `
-        <tr class="recipe-rows">
-          <td>${recipes.name}</td>
-          <td>${recipes.mealType}</td>
-          <td>${recipes.description}</td>
+        <tr class="recipe-rows" data-recipe="${recipe.name}">
+          <td>${recipe.name}</td>
+          <td>${recipe.mealType}</td>
+          <td>${recipe.description}</td>
         </tr>
       `;
     }).join("\n");
     document.getElementById("recipe-list").innerHTML = trows;
   
-    document.getElementById("recipe-list").addEventListener("click");
+    const recipeRows = document.getElementsByClassName("recipe-rows");
+    Array.from(recipeRows).forEach(row => {
+      row.addEventListener("click", handleRecipeRowClick);
+    });
+  }
+
+  export function handleRecipeRowClick(event) {
+    const clickedRow = event.currentTarget;
+    const recipeName = clickedRow.dataset.recipes;
+    const recipeDetailsURL = `/recipe-details.html?recipe=${encodeURIComponent(recipeName)}`;
+    window.location.href = recipeDetailsURL;
   }
 
   export function addRecipeElement(){
