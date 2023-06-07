@@ -16,7 +16,8 @@ export function getAllRecipeLines(){
 
 
 function makeRows(rows) {
-  const trows = rows.map(recipeLines => {
+  const filteredRows = rows.filter(recipeLines => recipeLines.recipeName === recipeName);
+  const trows = filteredRows.map(recipeLines => {
 
     return `
       <tr class="rows-with-recipeLines">

@@ -18,7 +18,6 @@ window.addEventListener("load", async () => {
   const templateIngredients = await loadTemplate("./js-pages/ingredient/ingredient.html")
   const templateRecipe = await loadTemplate ("./js-pages/recipe/recipe.html")
   const templateRecipeLine = await loadTemplate("./js-pages/recipeLine/recipeLine.html")
-  const templateRecipeDetails = await loadTemplate ("./js-pages/recipeDetails/recipeDetails.html")
 
   const router = new Navigo("/", { hash: true });
 
@@ -70,10 +69,6 @@ window.addEventListener("load", async () => {
       addRecipeElement()
       handleRecipeRowClick()
 
-    })
-
-    .on("/recipeDetails", () => {
-      renderTemplate(templateRecipeDetails, "content");
     })
 
     .on( "/recipeLine", () => {

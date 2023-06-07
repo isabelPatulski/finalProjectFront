@@ -1,5 +1,8 @@
 import {LOCAL_SERVER_URL} from "../../settings.js"
 import {handleErrors, makeOptions} from "../../fetchUtils.js";
+import {getAllRecipeLines} from "../recipeLine/recipeLine.js";
+
+
 
 const URL = LOCAL_SERVER_URL+"api/recipes"
 
@@ -17,7 +20,7 @@ export function getAllRecipes(){
   function makeRows(rows) {
     const trows = rows.map(recipe => {
       return `
-        <tr class="recipe-rows recipe-link" data-recipe="${recipe.name}" onclick="handleRecipeRowClick(event)">
+        <tr class="recipe-rows recipe-link" data-recipe="${recipe.name}">
           <td>${recipe.name}</td>
           <td>${recipe.mealType}</td>
           <td>${recipe.description}</td>
@@ -28,23 +31,23 @@ export function getAllRecipes(){
   
     const recipeRows = document.getElementsByClassName("recipe-rows");
     Array.from(recipeRows).forEach(row => {
-      row.addEventListener("click", event => handleRecipeRowClick(event));
+    row.addEventListener("click", handleRecipeRowClick);
     });
   }  
   
 
-  export function handleRecipeRowClick(event) {
+  export async function handleRecipeRowClick(event) {
     const clickedRow = event.currentTarget;
     const recipeName = clickedRow.dataset.recipe;
-    getRecipeDetails(recipeName);
+      document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
+      getRecipeDetails(recipeName)
+      getAllRecipeLines(recipeName);
   }
 
 export function getRecipeDetails(recipeName) {
   const recipeDetailsURL = `${URL}/${encodeURIComponent(recipeName)}`;
-  const options = makeOptions("GET");
 
-  fetch(recipeDetailsURL, options)
-    .then(handleErrors)
+  fetch(recipeDetailsURL)
     .then(res => res.json())
     .then(recipeDetails => {
 
