@@ -1,101 +1,132 @@
-#showContent{
-    display: flex;
-    justify-content: center;
-    height: 94vh;
+/* Page layout */
+#showContent {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
 }
 
-#ingredients-rows {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+#ingredient-menu {
+  margin-bottom: 1em;
+}
 
-  }
-  
-  #ingredients-rows td, #ingredients-rows th {
-    border: 1px solid #ddd;
-    padding: 8px;
+/* Recipe details */
+#recipe-details {
+  margin-bottom: 1em;
+}
 
-  }
+#recipe-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4CAF50;
+}
 
-  #ingredients-rows tr:nth-child(even){background-color: #f2f2f2;}
-  
-  
-  #ingredients-rows th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #04AA6D;
-    color: white;
+#recipe-description {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+}
 
+#meal-type {
+  font-size: 16px;
+  font-style: italic;
+  color: #777;
+}
 
-  }
-
-
-/* Button used to open the contact form - fixed at the bottom of the page */
+/* Form popup */
 .open-button {
-  background-color: #555;
+  background-color: #4CAF50;
   color: white;
-  padding: 16px 20px;
   border: none;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 280px;
 }
 
-/* The popup form - hidden by default */
 .form-popup {
   display: none;
   position: fixed;
-  bottom: 0;
-  right: 15px;
-  border: 3px solid #f1f1f1;
-  z-index: 9;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* Add styles to the form container */
 .form-container {
-  max-width: 300px;
-  padding: 10px;
-  background-color: white;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  margin: 100px auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-/* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
+.form-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-container label {
+  font-weight: bold;
+  color: #333;
+}
+
+.form-container input[type=text],
+.form-container input[type=number],
+.form-container select {
   width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #555;
 }
 
-/* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-/* Set a style for the submit/login button */
-.form-container .btn {
-  background-color: #04AA6D;
+.form-container button {
+  background-color: #4CAF50;
   color: white;
-  padding: 16px 20px;
   border: none;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
+}
+
+.form-container button.cancel {
+  background-color: #ff1744;
+}
+
+/* Recipe lines table */
+.ingredients_content {
+  margin-top: 2em;
+}
+
+#ingredients-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.recipeLine-rows {
   width: 100%;
-  margin-bottom:10px;
-  opacity: 0.8;
+  border-collapse: collapse;
 }
 
-/* Add a red background color to the cancel button */
-.form-container .cancel {
-  background-color: red;
+.recipeLine-rows th,
+.recipeLine-rows td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
-/* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-  opacity: 1;
+.recipeLine-rows th {
+  background-color: #f5f5f5;
+  color: #333;
 }
 

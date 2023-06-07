@@ -16,9 +16,14 @@ export function getAllRecipeLines(){
 
 
 function makeRows(rows) {
+  // Retrieve the selected recipe name from localStorage
+  const recipeName = localStorage.getItem('selectedRecipe');
+  
+  // Filter the rows based on the recipe name
   const filteredRows = rows.filter(recipeLines => recipeLines.recipeName === recipeName);
+  
+  // Generate the HTML rows for the filtered recipe lines
   const trows = filteredRows.map(recipeLines => {
-
     return `
       <tr class="rows-with-recipeLines">
         <td>${recipeLines.id}</td>
@@ -29,8 +34,13 @@ function makeRows(rows) {
       </tr>
     `;
   }).join("\n");
+  
+  // Set the HTML rows in the target element
   document.getElementById("recipeLines-rows").innerHTML = trows;
 }
+
+
+
 
 
 

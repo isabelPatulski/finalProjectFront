@@ -39,6 +39,8 @@ export function getAllRecipes(){
   export async function handleRecipeRowClick(event) {
     const clickedRow = event.currentTarget;
     const recipeName = clickedRow.dataset.recipe;
+    localStorage.setItem('selectedRecipe', recipeName);
+
       document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
       getRecipeDetails(recipeName)
       getAllRecipeLines(recipeName);
