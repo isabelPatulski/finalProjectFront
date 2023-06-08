@@ -1,50 +1,61 @@
-#content{
+body {
+  font-family: sans-serif;
+}
+
+.navbar {
+  background-color: #3b7d61;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #fff;
+}
+
+.navbar-nav .nav-link {
+  color: #fff;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ddd1d1;
+}
+
+#content {
+  margin-top: 20px;
+}
+
+/* Custom styling for the navigation menu */
+#menu-not-logged-in,
+#menu-logged-in {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#menu-logged-in {
+  display: none;
+}
+
+/* Table styling */
+.recipeLine-rows {
   width: 100%;
-  height: 100vh;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.navbar{
-  background-color: #04114E;
+.recipeLine-rows th,
+.recipeLine-rows td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
-.container-fluid{
-  font-size: 16px;
+.recipeLine-rows th {
+  background-color: #f2f2f2;
 }
 
-.nav-link{
-  color:whitesmoke;
+.recipeLine-rows tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
-ul.menu {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  color:whitesmoke;
+.recipeLine-rows tbody tr:hover {
+  background-color: #7a7676;
 }
-
-ul.menu li {
-  display: flex;
-  justify-content: center;
-}
-
-ul.menu li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-ul.menu li a:hover:not(.active) {
-  background-color: grey;
-}
-
-.active {
-  background-color: lightslategray;
-
-#content{
-  overflow: auto;
-  background: lightgoldenrodyellow;
-}
-

@@ -14,7 +14,6 @@ import { getAllRecipeLines, setupRecipeLineFormHandlers, addRecipeLinesElement }
 window.addEventListener("load", async () => {
   const templateLogin = await loadTemplate("./js-pages/login/login.html")
   const templateRegister = await loadTemplate("./js-pages/register/register.html")
-  const templateConfirmed = await loadTemplate("./js-pages/confirmed/confirmed.html")
   const templateIngredients = await loadTemplate("./js-pages/ingredient/ingredient.html")
   const templateRecipe = await loadTemplate ("./js-pages/recipe/recipe.html")
   const templateRecipeLine = await loadTemplate("./js-pages/recipeLine/recipeLine.html")
@@ -38,9 +37,6 @@ window.addEventListener("load", async () => {
       console.log ("test")
     })
 
-    .on("/confirmed", () => {
-      renderTemplate(templateConfirmed,"content")
-    })
 
     .on( "/login", () => {
       renderTemplate(templateLogin,"content")

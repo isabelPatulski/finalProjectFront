@@ -1,101 +1,141 @@
-#showContent{
-    display: flex;
-    justify-content: center;
-    height: 94vh;
+/* General styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f6f6f6;
+  color: #333;
 }
 
-#ingredients-rows {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  }
-  
-  #ingredients-rows td, #ingredients-rows th {
-    border: 1px solid #ddd;
-    padding: 8px;
+h1, h2, h3 {
+  margin: 0;
+  padding: 0;
+}
 
-  }
+/* Add ingredient form */
+#ingredient-menu {
+  margin-bottom: 1em;
+}
 
-  #ingredients-rows tr:nth-child(even){background-color: #f2f2f2;}
-  
-  
-  #ingredients-rows th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #04AA6D;
-    color: white;
-
-
-  }
-
-
-/* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
-  background-color: #555;
-  color: white;
-  padding: 16px 20px;
+  background-color: #3b7d61;
+  color: #fff;
   border: none;
+  padding: 10px 20px;
+  font-size: 14px;
   cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 280px;
 }
 
-/* The popup form - hidden by default */
 .form-popup {
   display: none;
   position: fixed;
-  bottom: 0;
-  right: 15px;
-  border: 3px solid #f1f1f1;
-  z-index: 9;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* Add styles to the form container */
 .form-container {
-  max-width: 300px;
-  padding: 10px;
-  background-color: white;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
-/* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
+.form-container h1 {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  color: #555;
+}
+
+input[type="text"],
+input[type="number"] {
   width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #333;
 }
 
-/* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-/* Set a style for the submit/login button */
-.form-container .btn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px 20px;
+button#saveNewIngredient {
+  background-color: #3b7d61;
+  color: #fff;
   border: none;
+  padding: 10px 20px;
+  font-size: 14px;
   cursor: pointer;
+}
+
+/* Ingredients list */
+.ingredients_content {
+  margin-top: 20px;
+}
+
+#ingredients-header {
+  margin-bottom: 10px;
+}
+
+.ingredients-rows {
   width: 100%;
-  margin-bottom:10px;
-  opacity: 0.8;
+  border-collapse: collapse;
 }
 
-/* Add a red background color to the cancel button */
-.form-container .cancel {
-  background-color: red;
+.ingredients-rows th,
+.ingredients-rows td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
-/* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-  opacity: 1;
+.ingredients-rows th {
+  background-color: #f2f2f2;
 }
 
+/* Custom styling */
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.open-button,
+button#saveNewIngredient {
+  background-color: #3b7d61;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.ingredients-rows th {
+  background-color: #f2f2f2;
+}
+
+/* Add your custom styles here */

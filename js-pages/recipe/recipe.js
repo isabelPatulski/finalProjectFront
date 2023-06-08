@@ -41,9 +41,10 @@ export function getAllRecipes(){
     const recipeName = clickedRow.dataset.recipe;
     localStorage.setItem('selectedRecipe', recipeName);
 
-      document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
-      getRecipeDetails(recipeName)
-      getAllRecipeLines(recipeName);
+    showRecipeDetails(recipeName)  ;
+    //document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
+      //getRecipeDetails(recipeName)
+      //getAllRecipeLines(recipeName);
   }
 
 export function getRecipeDetails(recipeName) {
@@ -52,164 +53,43 @@ export function getRecipeDetails(recipeName) {
   fetch(recipeDetailsURL)
     .then(res => res.json())
     .then(recipeDetails => {
+      console.log("Name: "+ recipeDetails.name);
 
       document.getElementById("recipe-name").innerText = recipeDetails.name;
       document.getElementById("recipe-description").innerText = recipeDetails.description;
       document.getElementById("meal-type").innerText = recipeDetails.mealType;
 
-    
     })
     .catch(error => console.error(error));
 }
 
-  
 
-  export function addRecipeElement(){
-    document.getElementById("addRecipe").onclick = addRecipe
+export function addRecipeElement() {
+  document.getElementById("addRecipe").onclick = addRecipe;
 }
 
-function addRecipe(){
-const recipe = {}
-recipe.name = document.getElementById("recipe-name").value
-recipe.mealType = document.getElementById("mealTypes").value
-recipe.description = document.getElementById("recipe-description").value
+export async function showRecipeDetails(recipeName){
+    localStorage.setItem('selectedRecipe', recipeName);
+    document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
+      getRecipeDetails(recipeName)
+      getAllRecipeLines(recipeName);
+}
 
-fetch(URL, makeOptions("POST", recipe))
+function addRecipe(event) {
+  event.preventDefault();
+  const recipe = {};
+  recipe.name = document.getElementById("recipe-name").value;
+  recipe.mealType = document.getElementById("mealTypes").value;
+  recipe.description = document.getElementById("recipe-description").value;
+
+  fetch(URL, makeOptions("POST", recipe))
     .then(res => res.json())
     .then(newRecipe => {
-      document.getElementById("addRecipe").innerText = JSON.stringify(newRecipe)
+      const recipeName = encodeURIComponent(newRecipe.name);
+      const params = new URLSearchParams({ name: recipeName });
     })
-    .catch(error => console.error(error))
-}
+    .catch(error => console.error(error));
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-// Get DOM elements
-const form = document.querySelector('form');
-const recipeList = document.querySelector('#recipe-list');
-const noRecipes = document.getElementById('no-recipes');
-const searchBox = document.getElementById('search-box');
-
-let recipes = [];
-
-// Handle form submit
-function handleSubmit(event) {
-  // Prevent default form submission behavior
-  event.preventDefault();
-  
-  // Get recipe input values
-  const nameInput = document.querySelector('#recipe-name');
-  const ingrInput = document.querySelector('#recipe-ingredients');
-  const descriptionInput = document.querySelector('#recipe-description');
-  const mealTypeInput = document.querySelector('#recipe-mealType');
-  const name = nameInput.value.trim();
-  const ingredients = ingrInput.value.trim().split(',').map(i => i.trim());
-  const method = methodInput.value.trim();
-  
-  // Check if recipe name, ingredients, and method are valid
-  if (name && ingredients.length > 0 && method) {
-    // Create new recipe object and add it to recipes array
-    const newRecipe = { name, ingredients, method };
-    recipes.push(newRecipe);
-    
-    // Clear form inputs
-    nameInput.value = '';
-    ingrInput.value = '';
-    methodInput.value = '';
-    
-    // Add new recipe to recipe list
-    displayRecipes();
+    document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
+    getRecipeDetails(recipe.name)
   }
-}
-
-export function getAllRecipes(){
-    fetch(URL)
-    .then(res=>res.json())
-    .then(recipes=>{
-      
-      makeRows(recipes)
-      
-    })
-    .catch(e=>console.error(e))
-  }
-
-// Display recipes in recipe list
-function displayRecipes() {
-  recipeList.innerHTML = '';
-  recipes.forEach((recipe, index) => {
-    const recipeDiv = document.createElement('div');
-	// Create div to display the individual recipe, for each recipe
-    recipeDiv.innerHTML = `
-      <h3>${recipe.name}</h3>
-      <p><strong>Ingredients:</strong></p>
-      <ul>
-        ${recipe.ingredients.map(ingr => `<li>${ingr}</li>`).join('')}
-      </ul>
-      <p><strong>Method:</strong></p>
-      <p>${recipe.method}</p>
-      <button class="delete-button" data-index="${index}">Delete</button>`;
-    recipeDiv.classList.add('recipe');
-    recipeList.appendChild(recipeDiv);
-  });
-  // Display warning when there are no recipes in the list
-  if (recipes.length > 0) {
-	noRecipes.style.display = 'none';
-  }
-  else {
-	noRecipes.style.display = 'flex';
-  }
-}
-
-// Handle recipe deletion
-function handleDelete(event) {
-  if (event.target.classList.contains('delete-button')) {
-    const index = event.target.dataset.index;
-    recipes.splice(index, 1);
-    displayRecipes();
-	searchBox.value = '';
-  }
-}
-
-// Search recipes by search query
-function search(query) {
-  const filteredRecipes = recipes.filter(recipe => {
-    return recipe.name.toLowerCase().includes(query.toLowerCase());
-  });
-  recipeList.innerHTML = '';
-  filteredRecipes.forEach(recipe => {
-    const recipeEl = document.createElement('div');
-    recipeEl.innerHTML = `
-      <h3>${recipe.name}</h3>
-      <p><strong>Ingredients:</strong></p>
-      <ul>
-        ${recipe.ingredients.map(ingr => `<li>${ingr}</li>`).join('')}
-      </ul>
-      <p><strong>Method:</strong></p>
-      <p>${recipe.method}</p>
-      <button class="delete-button" data-index="${recipes.indexOf(recipe)}">
-		Delete
-	  </button>`;
-    recipeEl.classList.add('recipe');
-    recipeList.appendChild(recipeEl);
-  });
-}
-
-// Add event listeners
-form.addEventListener('submit', handleSubmit);
-recipeList.addEventListener('click', handleDelete);
-searchBox.addEventListener('input', event => search(event.target.value));*/

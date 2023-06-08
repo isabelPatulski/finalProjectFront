@@ -1,23 +1,75 @@
-#showContent{
-  display: flex;
-  justify-content: center;
-  height: 94vh;
+/* General styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f6f6f6;
+  color: #333;
 }
 
-#recipe-rows {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* Add recipes form */
+.left-column {
+  width: 50%;
+  float: left;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  color: #555;
+}
+
+input[type="text"],
+textarea,
+select {
   width: 100%;
-
-}
-
-#recipe-rows td, #recipe-rows th {
-  border: 1px solid #ddd;
   padding: 8px;
-
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #333;
 }
 
-#recipe-rows tr:nth-child(even){background-color: #f2f2f2;}
+button#addRecipe {
+  background-color: #3b7d61;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Search bar/view recipes list */
+.right-column {
+  width: 50%;
+  float: right;
+}
+
+#recipe-header {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 
 .recipe-table {
   width: 100%;
@@ -26,117 +78,33 @@
 
 .recipe-table th,
 .recipe-table td {
+  border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
 
 .recipe-table th {
   background-color: #f2f2f2;
-  font-weight: bold;
 }
 
-.recipe-table tr:nth-child(even) {
+/* Custom styling */
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.left-column {
   background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
 }
 
-.recipe-table tr:hover {
-  background-color: #e5e5e5;
-  cursor: pointer;
+.right-column {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#recipe-rows th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color: white;
-
-
-}
-
-.recipe-link:hover {
-  cursor: pointer;
-  color: blue;
-  text-decoration: underline;
-}
-
-body {
-    font-family: sans-serif;
-  }
-  
-  nav {
-    background-color: #333;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 20px;
-    padding: 20px;
-    left: 0;
-    color: white;
-    text-align: center;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 150px 5%;
-  }
-  
-  .left-column {
-    width: 25%;
-  }
-  
-  .right-column {
-    width: 65%;
-  }
-  
-  /* Styling for the Add Recipes form */
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-bottom: 10px;
-  }
-  
-  input[type="text"], textarea {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  button[type="submit"] {
-    padding: 10px;
-    background-color: #3338;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }  
-  
- 
-  
-  /* Delete button styling */
-  /*.delete-button {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .delete-button:hover {
-    background-color: #c82333;
-  }
-  
-  /* Search label styling 
-  label[for="search-box"] {
-    display: block;
-    margin-bottom: 10px;
-  }
+/* Add your custom styles here */

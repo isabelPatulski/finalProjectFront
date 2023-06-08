@@ -1,7 +1,10 @@
 import {LOCAL_SERVER_URL} from "../../settings.js"
 import {handleErrors, makeOptions} from "../../fetchUtils.js";
+import {getRecipeDetails} from "../recipe/recipe.js";
 
 const URL = LOCAL_SERVER_URL+"api/recipeLines"
+const URLIngredients = LOCAL_SERVER_URL+"api/ingredients"
+
 
 export function getAllRecipeLines(){
   fetch(URL)
@@ -26,11 +29,11 @@ function makeRows(rows) {
   const trows = filteredRows.map(recipeLines => {
     return `
       <tr class="rows-with-recipeLines">
-        <td>${recipeLines.id}</td>
+        <td hidden>${recipeLines.id}</td>
         <td>${recipeLines.amount}</td>
         <td>${recipeLines.measurementType}</td>
         <td>${recipeLines.ingredientName}</td>
-        <td>${recipeLines.recipeName}</td>
+        <td hidden>${recipeLines.recipeName}</td>
       </tr>
     `;
   }).join("\n");
@@ -39,19 +42,15 @@ function makeRows(rows) {
   document.getElementById("recipeLines-rows").innerHTML = trows;
 }
 
-
-
-
-
-
 export function addRecipeLinesElement(){
     document.getElementById("saveNewRecipeLine").onclick = addRecipeLine
 }
 
+
 function addRecipeLine(){
 const recipeLine = {}
-recipeLine.recipeName = document.getElementById("input-recipeName").value;
-recipeLine.ingredientName = document.getElementById("input-ingredientName").value;
+recipeLine.recipeName = document.getElementById("input-recipeName").innerHTML;
+recipeLine.ingredientName = document.getElementById("ingredientsDrop").value;
 recipeLine.measurementType = document.getElementById("input-measurementType").value;
 recipeLine.amount = document.getElementById("input-amount").value;
   
@@ -61,8 +60,14 @@ fetch(URL, makeOptions("POST", recipeLine))
     .then(newRecipeLine => {
       document.getElementById("saveNewRecipeLine").innerText = JSON.stringify(newRecipeLine)
     })
-    .catch(error => console.error(error))
+    .catch(error => console.error(error));
+
+    document.location.href="http://127.0.0.1:5502/#/recipeLine";
+    getRecipeDetails(recipeLine.recipeName);
+  
 }
+
+
 
 export async function setupRecipeLineFormHandlers() {
   const addButton = document.getElementById("open-button");
@@ -74,30 +79,30 @@ export async function setupRecipeLineFormHandlers() {
 
 function showRecipeLineForm(event) {
   event.preventDefault(); // Prevent form submission and page refresh
-
   document.getElementById("myForm").style.display = "block";
+
+  let ingredientsDropdown = document.getElementById("ingredientsDrop");
+  ingredientsDropdown.innerHTML = ""; // Clear existing options
+
+  let defaultOption = new Option('Select ingredient', '', true, true);
+  defaultOption.disabled = true;
+  ingredientsDropdown.appendChild(defaultOption);
+
+  fetch(URLIngredients)
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(ingredient => {
+        let option = new Option(ingredient.name);
+        ingredientsDropdown.appendChild(option);
+      });
+    });
+    document.getElementById("input-recipeName").innerHTML=document.getElementById("recipe-name").innerHTML;
+
 }
 
 function hideRecipeLineForm() {
   document.getElementById("myForm").style.display = "none";
 }
-
-
-/*
-function addRecipeLine(recipeName, ingredientName) {
-  const recipeLine = {};
-  recipeLine.ingredientName = ingredientName;
-  recipeLine.amount = parseFloat(document.getElementById("input-amount").value);
-  recipeLine.measureType = document.getElementById("input-measure-type").value;
-  recipeLine.recipeName = recipeName;
-
-  fetch(URL, makeOptions("POST", recipeLine))
-    .then(res => res.json())
-    .then(newRecipeLine => {
-      document.getElementById("saveNewRecipeLine").innerText = JSON.stringify(newRecipeLine);
-    })
-    .catch(error => console.error(error));
-}*/
 
 
 

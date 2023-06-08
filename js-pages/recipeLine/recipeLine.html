@@ -1,6 +1,6 @@
 <template data-id="page-recipeLine">
+  <link rel="stylesheet" href="recipeLine.css">
   <form id="showContent">
-    <link rel="stylesheet" href="recipeLine.css">
     <div id="ingredient-menu" class="ingredient-menu">
       <h1 class="recipe-details-title">Recipe Details</h1>
       <div id="recipe-details" class="recipe-details">
@@ -14,12 +14,12 @@
         <form class="form-container">
           <h1>Add new recipeLine</h1>
 
-          <label for="RecipeName"><b>RecipeName</b></label>
-          <input type="text" id="input-recipeName" placeholder="Enter recipeName.." name="recipeName" required>
+          <label for="RecipeName"><b>You are adding to: </b></label>
+          <div type="text" id="input-recipeName"></div>
 
           <label for="IngredientName"><b>IngredientName</b></label>
-          <input type="text" id="input-ingredientName" placeholder="Enter ingredient to use.." name="ingredientName" required>
-          <label for="MeasurementType">measurementType:</label>
+          <select name="ingredients" id="ingredientsDrop" required></select>
+          <label for="MeasurementType"> MeasurementType:</label>
           <select name="measurementType" id="input-measurementType" placeholder="Choose mesurementType to use.." required>
             <option value="LITER">LITER</option>
             <option value="CUP">CUP</option>
@@ -44,11 +44,11 @@
       <table class="recipeLine-rows">
         <thead>
           <tr>
-            <th>Id</th>
+            <th hidden>Id</th>
             <th>Amount</th>
             <th>MesureType</th>
             <th>Ingredient</th>
-            <th>Recipe</th>
+            <th hidden>Recipe</th>
           </tr>
         </thead>
         <tbody id="recipeLines-rows">
