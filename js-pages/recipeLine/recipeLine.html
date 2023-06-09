@@ -7,9 +7,28 @@
         <h2 id="recipe-name" class="recipe-name"></h2>
         <p id="recipe-description" class="recipe-description"></p>
         <p id="meal-type" class="meal-type"></p>
+
+        <button class="edit-button" id="edit-button">Edit Recipe</button>
+        <div class="popup-overlay">
+          <div class="popup-content">
+            <h1>Edit Recipe</h1>
+            <label for="edit-name">Name:</label>
+            <input type="text" id="edit-name" placeholder="Enter recipe name" required>
+            <label for="edit-description">Description:</label>
+            <textarea id="edit-description" placeholder="Enter recipe description" required></textarea>
+            <label for="edit-meal-type">Meal Type:</label>
+            <select id="edit-meal-type">
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Dessert">Dessert</option>
+            </select>
+            <button class="save-button">Save Changes</button>
+            <button class="cancel-button">Cancel</button>
+          </div>
       </div>
 
-      <button class="open-button" id="open-button">Add ingredient</button>
+      <button class="open-button" id="open-button">Add new information</button>
       <div class="form-popup" id="myForm">
         <form class="form-container">
           <h1>Add new recipeLine</h1>

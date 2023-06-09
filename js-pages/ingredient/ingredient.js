@@ -31,10 +31,10 @@ function makeRows(rows) {
   }).join("\n");
   document.getElementById("ingredients-rows").innerHTML = trows;
 
-  document.getElementById("ingredients-rows").addEventListener("click", handleDelete);
+  document.getElementById("ingredients-rows").addEventListener("click", handleDeleteIngredient);
 }
 
-export async function handleDelete(event) {
+export async function handleDeleteIngredient(event) {
   if (event.target.nodeName === "INPUT" && event.target.type === "button") {
     const buttonId = event.target.id;
     const row = event.target.parentNode.parentNode;

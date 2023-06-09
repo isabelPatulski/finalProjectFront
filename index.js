@@ -3,9 +3,9 @@ import {setActiveLink, loadTemplate, renderTemplate, adjustForMissingHash } from
 import {setupRegisterHandlers} from "./js-pages/register/register.js"
 import {setupLoginHandlers } from "./js-pages/login/login.js"
 import {showMenu} from "./js-pages/home/menu.js"
-import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers, handleDelete} from "./js-pages/ingredient/ingredient.js"
+import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers, handleDeleteIngredient} from "./js-pages/ingredient/ingredient.js"
 import {getAllRecipes, addRecipeElement, handleRecipeRowClick} from "./js-pages/recipe/recipe.js"
-import { getAllRecipeLines, setupRecipeLineFormHandlers, addRecipeLinesElement } from "./js-pages/recipeLine/recipeLine.js"
+import { getAllRecipeLines, setupRecipeLineFormHandlers, addRecipeLinesElement, handleDeleteLine, handleEditRecipe } from "./js-pages/recipeLine/recipeLine.js"
 
 //import { getRecipeDetails } from "./js-pages/recipeDetails/recipeDetails.js"
 
@@ -55,7 +55,7 @@ window.addEventListener("load", async () => {
       getAllIngredients()    
       setupIngredientFormHandlers()
       addIngredientElement()
-      handleDelete()
+      handleDeleteIngredient()
         
     })
 
@@ -72,6 +72,8 @@ window.addEventListener("load", async () => {
       getAllRecipeLines()
       setupRecipeLineFormHandlers()
       addRecipeLinesElement()
+      handleDeleteLine()
+      handleEditRecipe()
 
     })
 
