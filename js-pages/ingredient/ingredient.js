@@ -25,6 +25,7 @@ function makeRows(rows) {
       <tr class="rows-with-ingredients">
         <td>${ingredients.name}</td>
         <td>${ingredients.price}</td>
+        <td>${ingredients.measurementType}</td>
         <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
       </tr>
     `;
@@ -42,7 +43,7 @@ export async function handleDeleteIngredient(event) {
 
     try {
       const response = await fetch(`${URL}/${encodeURIComponent(ingredientName)}`, makeOptions("DELETE"));
-      console.log(response); // Log the response for debugging
+      console.log(response); // Log the response 
 
       if (response.ok) {
         row.remove();
@@ -64,6 +65,8 @@ function addIngredient(){
 const ingredient = {}
 ingredient.name = document.getElementById("input-name").value
 ingredient.price = document.getElementById("input-price").value
+ingredient.measurementType = document.getElementById("input-measurementType").value
+
 
 fetch(URL, makeOptions("POST", ingredient))
     .then(res => res.json())

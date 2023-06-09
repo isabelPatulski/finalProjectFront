@@ -40,7 +40,6 @@ function makeRows(rows) {
       <tr class="rows-with-recipeLines">
         <td hidden>${recipeLine.id}</td>
         <td>${recipeLine.amount}</td>
-        <td>${recipeLine.measurementType}</td>
         <td>${recipeLine.ingredientName}</td>
         <td hidden>${recipeLine.recipeName}</td>
         <td>${totalPrice}</td>
@@ -91,7 +90,6 @@ function addRecipeLine() {
   const recipeLine = {};
   recipeLine.recipeName = document.getElementById("input-recipeName").innerHTML;
   recipeLine.ingredientName = document.getElementById("ingredientsDrop").value;
-  recipeLine.measurementType = document.getElementById("input-measurementType").value;
   recipeLine.amount = document.getElementById("input-amount").value;
 
   fetch(`${URLIngredients}/${encodeURIComponent(recipeLine.ingredientName)}`)
