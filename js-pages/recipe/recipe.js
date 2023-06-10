@@ -6,18 +6,19 @@ import {getAllRecipeLines} from "../recipeLine/recipeLine.js";
 
 const URL = LOCAL_SERVER_URL+"api/recipes"
 
-export function getAllRecipes(){
-    fetch(URL)
-    .then(res=>res.json())
-    .then(recipes=>{
-      
-      makeRows(recipes)
-      
+export function getAllRecipes() {
+  fetch(URL)
+    .then(res => res.json())
+    .then(recipes => {
+      const totalPrice = getAllRecipeLines(); // Retrieve the total price from recipeLine.js
+      makeRows(recipes, totalPrice); // Pass the total price to the makeRows function
     })
-    .catch(e=>console.error(e))
-  }
+    .catch(e => console.error(e));
+}
+
     
   function makeRows(rows) {
+
     const trows = rows.map(recipe => {
       return `
         <tr class="recipe-rows recipe-link" data-recipe="${recipe.name}">
@@ -42,9 +43,7 @@ export function getAllRecipes(){
     localStorage.setItem('selectedRecipe', recipeName);
 
     showRecipeDetails(recipeName)  ;
-    //document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
-      //getRecipeDetails(recipeName)
-      //getAllRecipeLines(recipeName);
+  
   }
 
 export function getRecipeDetails(recipeName) {
@@ -70,7 +69,7 @@ export function addRecipeElement() {
 
 export async function showRecipeDetails(recipeName){
     localStorage.setItem('selectedRecipe', recipeName);
-    document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
+    document.location.href="http://127.0.0.1:5502/#/recipeLine";
       getRecipeDetails(recipeName)
       getAllRecipeLines(recipeName);
 }
@@ -90,6 +89,6 @@ function addRecipe(event) {
     })
     .catch(error => console.error(error));
 
-    document.location.href="http://127.0.0.1:5502/#/recipeLine";//?name="+recipeName;
+    document.location.href="http://127.0.0.1:5502/#/recipeLine";
     getRecipeDetails(recipe.name)
   }

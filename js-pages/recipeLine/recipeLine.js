@@ -66,6 +66,16 @@ function makeRows(rows) {
   });
 }
 
+export function calculateTotalPrice(recipeLines) {
+  let totalPrice = 0;
+
+  recipeLines.forEach(recipeLine => {
+    totalPrice += recipeLine.price * recipeLine.amount;
+  });
+
+  return totalPrice;
+}
+
 
 
 
