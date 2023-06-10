@@ -24,37 +24,49 @@ let deleteButtonId = 1;
 function makeRows(rows) {
   const recipeName = localStorage.getItem('selectedRecipe');
   const filteredRows = rows.filter(recipeLine => recipeLine.recipeName === recipeName);
-  
-  const trows = filteredRows.map(async recipeLine => {
+
+  let totalPrice = 0;
+
+  const trows = filteredRows.map(recipeLine => {
     const deleteButtonIdString = `btn-delete-recipeLine-${deleteButtonId}`;
     deleteButtonId++;
 
-    // Fetch the ingredient details to get the price
-    const ingredientResponse = await fetch(`${URLIngredients}/${encodeURIComponent(recipeLine.ingredientName)}`);
-    const ingredient = await ingredientResponse.json();
-    
-    // Calculate the total price based on the ingredient price and amount
-    const totalPrice = ingredient.price * recipeLine.amount;
+    const ingredientDetailsPromise = fetch(`${URLIngredients}/${encodeURIComponent(recipeLine.ingredientName)}`)
+      .then(res => res.json());
 
-    return `
-      <tr class="rows-with-recipeLines">
-        <td hidden>${recipeLine.id}</td>
-        <td>${recipeLine.amount}</td>
-        <td>${recipeLine.ingredientName}</td>
-        <td hidden>${recipeLine.recipeName}</td>
-        <td>${totalPrice}</td>
-        <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
-      </tr>
-    `;
+    return ingredientDetailsPromise.then(ingredient => {
+      const price = ingredient.price * recipeLine.amount;
+      totalPrice += price;
+
+      return `
+        <tr class="rows-with-recipeLines">
+          <td hidden>${recipeLine.id}</td>
+          <td>${recipeLine.ingredientName}</td>
+          <td>${ingredient.measurementType}</td>
+          <td>${recipeLine.amount}</td>
+          <td hidden>${recipeLine.recipeName}</td>
+          <td>${price}</td>
+          <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
+        </tr>
+      `;
+    });
   });
 
-  Promise.all(trows)
-    .then(rows => {
-      document.getElementById("recipeLines-rows").innerHTML = rows.join("\n");
-      document.getElementById("recipeLines-rows").addEventListener("click", handleDeleteLine);
-    })
-    .catch(e => console.error(e));
+  Promise.all(trows).then(htmlRows => {
+    const totalPriceField = document.getElementById("recipeTotalPrice");
+    totalPriceField.textContent = `Total Price: ${totalPrice.toFixed(2)}`; // Display the total price with two decimal places
+    document.getElementById("recipeLines-rows").innerHTML = htmlRows.join("\n");
+
+    // Handle the delete button clicks
+    htmlRows.forEach((htmlRow, index) => {
+      const deleteButtonIdString = `btn-delete-recipeLine-${index + 1}`;
+      const deleteButton = document.getElementById(deleteButtonIdString);
+      deleteButton.addEventListener("click", () => handleDeleteLine(filteredRows[index].id));
+    });
+  });
 }
+
+
 
 
 export async function handleDeleteLine(event) {

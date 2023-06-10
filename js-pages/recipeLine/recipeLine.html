@@ -1,12 +1,15 @@
 <template data-id="page-recipeLine">
-  <link rel="stylesheet" href="recipeLine.css">
   <form id="showContent">
+    <link rel="stylesheet" href="recipeLine.css">
     <div id="ingredient-menu" class="ingredient-menu">
       <h1 class="recipe-details-title">Recipe Details</h1>
       <div id="recipe-details" class="recipe-details">
         <h2 id="recipe-name" class="recipe-name"></h2>
-        <p id="recipe-description" class="recipe-description"></p>
         <p id="meal-type" class="meal-type"></p>
+        <p id="recipe-description" class="recipe-description"></p>
+        <div id="recipeTotalPrice"></div>
+
+        
 
         <button class="edit-button" id="edit-button">Edit Recipe</button>
         <div class="popup-overlay">
@@ -56,9 +59,10 @@
         <thead>
           <tr>
             <th hidden>Id</th>
-            <th>Amount</th>
-            <th>MesureType</th>
             <th>Ingredient</th>
+            <th>MesureType</th>
+            <th>Amount</th>
+            <th>Price for ingredients</th>
             <th hidden>Recipe</th>
           </tr>
         </thead>
