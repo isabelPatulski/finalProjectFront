@@ -10,8 +10,7 @@ export function getAllRecipes() {
   fetch(URL)
     .then(res => res.json())
     .then(recipes => {
-      const totalPrice = getAllRecipeLines(); // Retrieve the total price from recipeLine.js
-      makeRows(recipes, totalPrice); // Pass the total price to the makeRows function
+      makeRows(recipes); 
     })
     .catch(e => console.error(e));
 }
@@ -25,6 +24,7 @@ export function getAllRecipes() {
           <td>${recipe.name}</td>
           <td>${recipe.mealType}</td>
           <td>${recipe.description}</td>
+          <td>${recipe.price}</td>
         </tr>
       `;
     }).join("\n");
