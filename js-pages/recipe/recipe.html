@@ -1,57 +1,54 @@
-<template>
+<template data-id="page-recipes">
   <form id="showContent">
-  <html>
-  <head>
-    <title>Recipe App</title>
-    <link rel="stylesheet" href="recipe.css">
-  </head>
-  <body>
-    <nav>
-    </nav>
-    <div class="container">
-      <!-- Add recipes form -->
-        <h3>Add Recipe</h3>
-        <form>
-          <label for="recipe-name">Name:</label>
-          <input type="text" id="recipe-name" required>
-          <br>
-          <label for="recipe-mealtype">Mealtype:</label>
-          <select name="mealTypes" id="mealTypes" required>
-            <option value="Breakfast">Breakfast</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Dessert">Dessert</option>
-          </select>
-          <br>
-          <label for="recipe-description">Description:</label>
-          <textarea id="recipe-description" rows="5" required></textarea>
-          <br>
-          <button id="addRecipe" type="submit">Add Recipe</button>
-        </form>
-      </div>
-      <!-- Search bar/view recipes list -->
-      <div class="left-column" id="seeRecipes" style="display: block">
-        <h3 id="recipe-header">
-          <span>All recipes</span>
-          <!--  <input type="search" placeholder="Search.." class="ingredient-search" id="search-input-ingredients" data-table="ingredients-table">-->
-        </h3>
-        <table class="recipe-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Mealtype</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody id="recipe-list">
-          </tbody>
-        </table>
-        <div id="recipeTotalPrice"></div>
-      </div>
-  </body>
-  </html>
+    <html>
+      <head>
+        <title>Recipe App</title>
+        <link rel="stylesheet" href="recipe.css">
+      </head>
+      <body>
+        <nav></nav>
+        <div>
+          <h3>Add Recipe</h3>
+          <form id="addRecipeForm">
+            <label for="recipe-name">Name:</label>
+            <input type="text" id="recipe-name" required>
+            <br>
+            <label for="recipe-mealtype">Mealtype:</label>
+            <select name="mealTypes" id="mealTypes" required>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Dessert">Dessert</option>
+            </select>
+            <br>
+            <label for="recipe-description">Description:</label>
+            <textarea id="recipe-description" rows="5" required></textarea>
+            <br>
+            <button id="addRecipe" type="submit">Add Recipe</button>
+          </form>
+        </div>
+        <div id="seeRecipes">
+          <h3 id="recipe-header">
+            <span>All recipes</span>
+          </h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name
+                </th>
+                <th>Description</th>
+                <th>Mealtype</th>
+                <th>Price
+                  <button id="sort-price" class="sort-button" data-sort="price"></button>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="recipe-list">
+            </tbody>
+          </table>
+          <div id="recipeTotalPrice"></div>
+        </div>
+      </body>
+    </html>
+  </form>
 </template>
-
-
-

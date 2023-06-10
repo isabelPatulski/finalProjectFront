@@ -35,7 +35,8 @@ function makeRows(rows) {
     })
     .join("\n");
   document.getElementById("ingredients-rows").innerHTML = trows;
-
+  document.querySelectorAll(".sort-button").forEach((button) =>
+  button.addEventListener("click", handleSort));
   document.getElementById("ingredients-rows").addEventListener("click", handleDeleteIngredient);
 }
 
@@ -96,29 +97,35 @@ function hideIngredientForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
-export function attachSortButtonListener() {
-  document.querySelector(".sort-button").addEventListener("click", handleSort);
-}
+let sortDirection = {
+  price: 1,
+  name: 1,
+};
 
 function handleSort(event) {
   event.preventDefault()
   const sortOrder = this.dataset.sort;
   const rows = Array.from(document.querySelectorAll(".rows-with-ingredients"));
-
-  rows.sort((a, b) => {
-    const aPrice = parseFloat(a.dataset.price);
-    const bPrice = parseFloat(b.dataset.price);
-    const aName = a.dataset.name;
-    const bName = b.dataset.name;
+  const sortedRows = rows.sort((a, b) => {
+    const aValue = a.getAttribute(`data-${sortOrder}`);
+    const bValue = b.getAttribute(`data-${sortOrder}`);
 
     if (sortOrder === "price") {
-      return aPrice - bPrice;
+      const aPrice = parseFloat(a.getAttribute("data-price"));
+      const bPrice = parseFloat(b.getAttribute("data-price"));
+      return (aPrice - bPrice) * sortDirection.price;
     } else if (sortOrder === "name") {
-      return aName.localeCompare(bName);
+      return aValue.localeCompare(bValue) * sortDirection.name;
     }
   });
 
+  sortDirection[sortOrder] *= -1;
+
   const tableBody = document.getElementById("ingredients-rows");
   tableBody.innerHTML = "";
-  rows.forEach((row) => tableBody.appendChild(row));
+  sortedRows.forEach((row) => tableBody.appendChild(row));
+
+  const button = document.querySelector(`.sort-button[data-sort="${sortOrder}"]`);
+  button.classList.toggle("asc", sortDirection[sortOrder] === 1);
+  button.classList.toggle("desc", sortDirection[sortOrder] === -1);
 }
