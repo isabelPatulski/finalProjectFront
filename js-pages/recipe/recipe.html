@@ -7,11 +7,9 @@
   </head>
   <body>
     <nav>
-	  <h1>Recipe App</h1>
     </nav>
     <div class="container">
-	   <!-- Add recipes form -->
-       <div class="left-column">
+      <!-- Add recipes form -->
         <h3>Add Recipe</h3>
         <form>
           <label for="recipe-name">Name:</label>
@@ -28,33 +26,32 @@
           <label for="recipe-description">Description:</label>
           <textarea id="recipe-description" rows="5" required></textarea>
           <br>
-          </div>
-          <button id= "addRecipe" type="submit">Add Recipe</button>
+          <button id="addRecipe" type="submit">Add Recipe</button>
         </form>
       </div>
-	  <!-- Search bar/view recipes list -->
-    <div class="right-column" id="seeRecipes" style="display: block">
-      <h3 id="recipe-header">
-        <span>All recipes</span>
-      <!--  <input type="search" placeholder="Search.." class="ingredient-search" id="search-input-ingredients" data-table="ingredients-table">-->
-      </h3>
-      <table class="recipe-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Mealtype</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody id="recipe-list">
-        </tbody>
-      </table>
-      <div id="recipeTotalPrice"></div>
-    </div>
-  </form>
+      <!-- Search bar/view recipes list -->
+      <div class="left-column" id="seeRecipes" style="display: block">
+        <h3 id="recipe-header">
+          <span>All recipes</span>
+          <!--  <input type="search" placeholder="Search.." class="ingredient-search" id="search-input-ingredients" data-table="ingredients-table">-->
+        </h3>
+        <table class="recipe-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Mealtype</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody id="recipe-list">
+          </tbody>
+        </table>
+        <div id="recipeTotalPrice"></div>
+      </div>
+  </body>
+  </html>
 </template>
-
 
 
 

@@ -17,24 +17,30 @@ window.addEventListener("load", async () => {
   const templateIngredients = await loadTemplate("./js-pages/ingredient/ingredient.html")
   const templateRecipe = await loadTemplate ("./js-pages/recipe/recipe.html")
   const templateRecipeLine = await loadTemplate("./js-pages/recipeLine/recipeLine.html")
+  const templateLoggedIn = await loadTemplate("./js-pages/home/loggedIn.html");
+  const templateNotLoggedIn = await loadTemplate("./js-pages/home/notLoggedIn.html");
+
+
 
   const router = new Navigo("/", { hash: true });
 
-  showMenu()
+  //showMenu()
   
   adjustForMissingHash()
   router
     .hooks({
       before(done, match) {
         setActiveLink("menu", match.url)
-        console.log("testetst")
         done()
       }
     })
 
     .on("/", () => {
-      renderTemplate(templateHome, "content")
-      console.log ("test")
+      if (isLoggedIn()) {
+        renderTemplate(templateLoggedIn, "content");
+      } else {
+        renderTemplate(templateNotLoggedIn, "content");
+      }
     })
 
 
