@@ -128,6 +128,7 @@ button#saveNewIngredient {
   cursor: pointer;
 }
 
+
 .form-container {
   background-color: #f9f9f9;
   padding: 20px;
@@ -138,4 +139,3 @@ button#saveNewIngredient {
   background-color: #f2f2f2;
 }
 
-/* Add your custom styles here */

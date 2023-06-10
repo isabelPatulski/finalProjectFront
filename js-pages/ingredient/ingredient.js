@@ -1,35 +1,39 @@
-import {LOCAL_SERVER_URL} from "../../settings.js"
-import {handleErrors, makeOptions} from "../../fetchUtils.js";
+import { LOCAL_SERVER_URL } from "../../settings.js";
+import { handleErrors, makeOptions } from "../../fetchUtils.js";
 
-const URL = LOCAL_SERVER_URL+"api/ingredients"
+const URL = LOCAL_SERVER_URL + "api/ingredients";
 
-export function getAllIngredients(){
+export function getAllIngredients() {
   fetch(URL)
-  .then(res=>res.json())
-  .then(ingredients=>{
-    
-    makeRows(ingredients)
-    
-  })
-  .catch(e=>console.error(e))
+    .then((res) => res.json())
+    .then((ingredients) => {
+      makeRows(ingredients);
+    })
+    .catch((e) => console.error(e));
 }
 
-let deleteButtonId = 1; 
+let deleteButtonId = 1;
 
 function makeRows(rows) {
-  const trows = rows.map(ingredients => {
-    const deleteButtonIdString = `btn-delete-ingredient-${deleteButtonId}`;
-    deleteButtonId++; // Increment the counter for the next ID
+  const trows = rows
+    .map((ingredients) => {
+      const deleteButtonIdString = `btn-delete-ingredient-${deleteButtonId}`;
+      deleteButtonId++; // Increment the counter for the next ID
+      const formattedPrice = ingredients.price.toLocaleString("da-DK", {
+        style: "currency",
+        currency: "DKK",
+      });
 
-    return `
-      <tr class="rows-with-ingredients">
+      return `
+      <tr class="rows-with-ingredients" data-price="${ingredients.price}" data-name="${ingredients.name}">
         <td>${ingredients.name}</td>
-        <td>${ingredients.price}</td>
+        <td style="text-align: right;">${formattedPrice}</td>
         <td>${ingredients.measurementType}</td>
         <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
       </tr>
     `;
-  }).join("\n");
+    })
+    .join("\n");
   document.getElementById("ingredients-rows").innerHTML = trows;
 
   document.getElementById("ingredients-rows").addEventListener("click", handleDeleteIngredient);
@@ -43,7 +47,7 @@ export async function handleDeleteIngredient(event) {
 
     try {
       const response = await fetch(`${URL}/${encodeURIComponent(ingredientName)}`, makeOptions("DELETE"));
-      console.log(response); // Log the response 
+      console.log(response); // Log the response
 
       if (response.ok) {
         row.remove();
@@ -56,24 +60,22 @@ export async function handleDeleteIngredient(event) {
   }
 }
 
-
-export function addIngredientElement(){
-    document.getElementById("saveNewIngredient").onclick = addIngredient
+export function addIngredientElement() {
+  document.getElementById("saveNewIngredient").onclick = addIngredient;
 }
 
-function addIngredient(){
-const ingredient = {}
-ingredient.name = document.getElementById("input-name").value
-ingredient.price = document.getElementById("input-price").value
-ingredient.measurementType = document.getElementById("input-measurementType").value
+function addIngredient() {
+  const ingredient = {};
+  ingredient.name = document.getElementById("input-name").value;
+  ingredient.price = document.getElementById("input-price").value;
+  ingredient.measurementType = document.getElementById("input-measurementType").value;
 
-
-fetch(URL, makeOptions("POST", ingredient))
-    .then(res => res.json())
-    .then(newIngredient => {
-      document.getElementById("saveNewIngredient").innerText = JSON.stringify(newIngredient)
+  fetch(URL, makeOptions("POST", ingredient))
+    .then((res) => res.json())
+    .then((newIngredient) => {
+      document.getElementById("saveNewIngredient").innerText = JSON.stringify(newIngredient);
     })
-    .catch(error => console.error(error))
+    .catch((error) => console.error(error));
 }
 
 export async function setupIngredientFormHandlers() {
@@ -94,4 +96,29 @@ function hideIngredientForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
+export function attachSortButtonListener() {
+  document.querySelector(".sort-button").addEventListener("click", handleSort);
+}
 
+function handleSort(event) {
+  event.preventDefault()
+  const sortOrder = this.dataset.sort;
+  const rows = Array.from(document.querySelectorAll(".rows-with-ingredients"));
+
+  rows.sort((a, b) => {
+    const aPrice = parseFloat(a.dataset.price);
+    const bPrice = parseFloat(b.dataset.price);
+    const aName = a.dataset.name;
+    const bName = b.dataset.name;
+
+    if (sortOrder === "price") {
+      return aPrice - bPrice;
+    } else if (sortOrder === "name") {
+      return aName.localeCompare(bName);
+    }
+  });
+
+  const tableBody = document.getElementById("ingredients-rows");
+  tableBody.innerHTML = "";
+  rows.forEach((row) => tableBody.appendChild(row));
+}
