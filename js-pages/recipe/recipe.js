@@ -6,16 +6,42 @@ import {getAllRecipeLines} from "../recipeLine/recipeLine.js";
 
 const URL = LOCAL_SERVER_URL+"api/recipes"
 
-export function getAllRecipes() {
-  fetch(URL)
-    .then(res => res.json())
-    .then(recipes => {
-      makeRows(recipes);
-    })
-    .catch(e => console.error(e));
-}
-
+    export function getAllRecipes() {
+      fetch(URL)
+      .then(res => res.json())
+      .then(recipes => {
+        makeRows(recipes);
+      })
+      .catch(e => console.error(e));    
+      const searchInput = document.getElementById("searchInput");
     
+      searchInput.addEventListener("input", handleSearch);
+    
+      function handleSearch() {
+        const query = searchInput.value.toLowerCase();
+        const rows = document.querySelectorAll(".recipe-row");
+    
+        rows.forEach((row) => {
+          const name = row.dataset.recipe.toLowerCase();
+          const description = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+          const mealType = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+    
+          if (
+            name.includes(query) ||
+            description.includes(query) ||
+            mealType.includes(query)
+          ) {
+            row.style.display = "table-row";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+    }
+    
+
+let deleteButtonId = 1;
+
 function makeRows(rows) {
   const trows = rows
     .map((recipe) => {
@@ -26,10 +52,10 @@ function makeRows(rows) {
         currency: "DKK",
       });
       return `
-        <tr class="recipe-rows" data-recipe="${recipe.name}" data-price="${recipe.price}" data-name="${recipe.name}">
+        <tr class="recipe-row" data-recipe="${recipe.name}" data-price="${recipe.price}" data-name="${recipe.name}">
           <td>${recipe.name}</td>
-          <td>${recipe.mealType}</td>
           <td>${recipe.description}</td>
+          <td>${recipe.mealType}</td>
           <td style="text-align: right;">${formattedPrice}</td>
           <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
         </tr>
@@ -44,17 +70,43 @@ function makeRows(rows) {
   });
 
   document.getElementById("sort-price").addEventListener("click", handleSort);
+  document.getElementById("recipe-list").addEventListener("click", handleDeleteRecipe);
 }
-  
 
-  export async function handleRecipeRowClick(event) {
-    const clickedRow = event.currentTarget;
-    const recipeName = clickedRow.dataset.recipe;
-    localStorage.setItem('selectedRecipe', recipeName);
+export async function handleDeleteRecipe(event) {
+  if (event.target.nodeName === "INPUT" && event.target.type === "button") {
+    const buttonId = event.target.id;
+    const row = event.target.parentNode.parentNode;
+    const recipeName = row.querySelector("td:first-child").textContent;
 
-    showRecipeDetails(recipeName)  ;
-  
+    try {
+      const response = await fetch(`${URL}/${encodeURIComponent(recipeName)}`, makeOptions("DELETE"));
+
+      if (response.ok) {
+        row.remove();
+      } else {
+        throw new Error("Delete request failed");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+
+    event.stopPropagation(); 
   }
+}
+
+  
+
+export async function handleRecipeRowClick(event) {
+  const clickedElement = event.target;
+  const recipeName = clickedElement.closest("tr").dataset.recipe;
+
+  if (!clickedElement.matches('input[type="button"]')) {
+    localStorage.setItem("selectedRecipe", recipeName);
+    showRecipeDetails(recipeName);
+  }
+}
+
 
 export function getRecipeDetails(recipeName) {
   const recipeDetailsURL = `${URL}/${encodeURIComponent(recipeName)}`;

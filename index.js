@@ -61,7 +61,6 @@ window.addEventListener("load", async () => {
       setupIngredientFormHandlers()
       addIngredientElement()
       handleDeleteIngredient()
-      //attachSortButtonListener()
         
     })
 

@@ -23,46 +23,44 @@ let deleteButtonId = 1;
 
 function makeRows(rows) {
   const recipeName = localStorage.getItem('selectedRecipe');
-  const filteredRows = rows.filter(recipeLine => recipeLine.recipeName === recipeName);
+  const filteredRows = rows.filter(recipeLines => recipeLines.recipeName === recipeName);
 
   let totalPrice = 0;
 
-  const trows = filteredRows.map(recipeLine => {
+  const trows = filteredRows.map(recipeLines => {
     const deleteButtonIdString = `btn-delete-recipeLine-${deleteButtonId}`;
     deleteButtonId++;
 
-    const ingredientDetailsPromise = fetch(`${URLIngredients}/${encodeURIComponent(recipeLine.ingredientName)}`)
-      .then(res => res.json());
+const ingredientDetailsPromise = fetch(`${URLIngredients}/${encodeURIComponent(recipeLines.ingredientName)}`)
+.then(res => res.json());
 
-    return ingredientDetailsPromise.then(ingredient => {
-      const price = ingredient.price * recipeLine.amount;
+return ingredientDetailsPromise.then(ingredient => {
+// Calculate the price based on ingredient price and recipe line amount
+const price = ingredient.price * recipeLines.amount;
       totalPrice += price;
-
-      return `
-        <tr class="rows-with-recipeLines">
-          <td hidden>${recipeLine.id}</td>
-          <td>${recipeLine.ingredientName}</td>
-          <td>${ingredient.measurementType}</td>
-          <td>${recipeLine.amount}</td>
-          <td hidden>${recipeLine.recipeName}</td>
-          <td>${price}</td>
-          <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
-        </tr>
+return `
+  <tr class="rows-with-recipeLines">
+    <td hidden>${recipeLines.id}</td>
+    <td>${recipeLines.ingredientName}</td>
+    <td>${ingredient.measurementType}</td>
+    <td>${recipeLines.amount}</td>
+    <td hidden>${recipeLines.recipeName}</td>
+    <td>${price}</td>
+    <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
+  </tr>
       `;
     });
   });
 
+
+  // Set the HTML rows in the target element
   Promise.all(trows).then(htmlRows => {
     const totalPriceField = document.getElementById("recipeTotalPrice");
     totalPriceField.textContent = `Total Price: ${totalPrice.toFixed(2)}`; // Display the total price with two decimal places
     document.getElementById("recipeLines-rows").innerHTML = htmlRows.join("\n");
 
-    // Handle the delete button clicks
-    htmlRows.forEach((htmlRow, index) => {
-      const deleteButtonIdString = `btn-delete-recipeLine-${index + 1}`;
-      const deleteButton = document.getElementById(deleteButtonIdString);
-      deleteButton.addEventListener("click", () => handleDeleteLine(filteredRows[index].id));
-    });
+    // Handle the delete
+    document.getElementById("recipeLines-rows").addEventListener("click", handleDeleteLine);
   });
 }
 
@@ -75,7 +73,6 @@ export function calculateTotalPrice(recipeLines) {
 
   return totalPrice;
 }
-
 
 
 
@@ -182,7 +179,7 @@ function openEditPopup(event) {
   const mealType = document.querySelector('.meal-type').textContent;
 
   // Set the values in the edit popup
-  document.getElementById('edit-name').value = recipeName;
+  document.getElementById('edit-name').textContent = recipeName;
   document.getElementById('edit-description').value = recipeDescription;
   document.getElementById('edit-meal-type').value = mealType;
 
@@ -200,15 +197,14 @@ function openEditPopup(event) {
   cancelButton.addEventListener('click', handleCancel);
 }
 
+
 function handleSave(event) {
   event.preventDefault();
 
-  const updatedName = document.getElementById('edit-name').value;
   const updatedDescription = document.getElementById('edit-description').value;
   const updatedMealType = document.getElementById('edit-meal-type').value;
 
   const updatedRecipe = {
-    name: updatedName,
     description: updatedDescription,
     mealType: updatedMealType
   };
@@ -227,6 +223,5 @@ function handleSave(event) {
 
 function handleCancel(event) {
   event.preventDefault();
-  // Close the edit popup
   document.querySelector('.popup-overlay').style.display = 'none';
 }

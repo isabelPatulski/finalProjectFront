@@ -15,6 +15,11 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.head-title {
+  font-size: 50px;
+  font-weight: bold;
+  color: #be1111;
+}
 
 h3 {
   margin: 0;
@@ -123,4 +128,79 @@ table th {
 .sort-button.desc:after {
   transform: rotate(0deg);
 }
- 
+
+.recipe-row:hover {
+  background-color: #cbc3c3;
+  cursor: pointer;
+}
+
+#searchInput {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  width: 200px;
+  transition: box-shadow 0.3s;
+}
+
+#searchInput:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+/* Add this CSS to your existing recipe.css file or create a new one */
+
+/* Add Recipe Form */
+#addRecipeForm {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+#addRecipeForm h3 {
+  margin-top: 0;
+}
+
+#addRecipeForm label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+#addRecipeForm input[type="text"],
+#addRecipeForm textarea,
+#addRecipeForm select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: box-shadow 0.3s;
+}
+
+#addRecipeForm input[type="text"]:focus,
+#addRecipeForm textarea:focus,
+#addRecipeForm select:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+#addRecipeForm button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#addRecipeForm button:hover {
+  background-color: #45a049;
+}
+
+#addRecipeForm button[type="submit"] {
+  background-color: #4CAF50;
+}

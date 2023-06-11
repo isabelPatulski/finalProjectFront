@@ -1,12 +1,11 @@
 <template data-id="page-recipes">
   <form id="showContent">
     <html>
+      <link rel="stylesheet" href="recipe.css">
       <head>
-        <title>Recipe App</title>
-        <link rel="stylesheet" href="recipe.css">
+        <title class="head-titel">Recipe App</title>
       </head>
       <body>
-        <nav></nav>
         <div>
           <h3>Add Recipe</h3>
           <form id="addRecipeForm">
@@ -43,6 +42,7 @@
                 </th>
               </tr>
             </thead>
+            <input type="text" id="searchInput" placeholder="Search...">
             <tbody id="recipe-list">
             </tbody>
           </table>
