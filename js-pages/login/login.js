@@ -23,7 +23,7 @@ async function login(event) {
     .then(res => handleErrors(res))
     .then(newUser => {
       document.getElementById("btn-login").innerText = JSON.stringify(newUser);
-      document.getElementById("user-email").innerText = credentials.email; // Update user email
+      document.getElementById("user-email").innerText = credentials.email; 
       // Redirect to front page or perform other actions
     })
     .catch(error => {

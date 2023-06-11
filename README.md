@@ -1,3 +1,3 @@
-# StartCode-Frontend
-
-Update link in settings.js to connect to backend
+Final project KEA - Isabel Patulski Nielsen
+Recipe application
+Link til backend: https://github.com/isabelPatulski/finalProjectBack
