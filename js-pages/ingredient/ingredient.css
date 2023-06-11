@@ -1,3 +1,18 @@
+#seeIngredient #ingredient-searchInput {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  width: 200px;
+  transition: box-shadow 0.3s;
+}
+
+#seeIngredient #ingredient-searchInput:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -149,6 +164,7 @@ button#saveNewIngredient {
   position: relative; /* Added */
 }
 
+
 .sort-button:focus {
   outline: none;
 }
@@ -176,3 +192,5 @@ button#saveNewIngredient {
 .sort-button.desc:after {
   transform: rotate(0deg);
 }
+
+

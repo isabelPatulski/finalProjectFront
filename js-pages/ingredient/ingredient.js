@@ -10,34 +10,57 @@ export function getAllIngredients() {
       makeRows(ingredients);
     })
     .catch((e) => console.error(e));
+
+  const searchInput = document.getElementById("ingredient-searchInput");
+  searchInput.addEventListener("input", handleSearch);
+
+  function handleSearch() {
+    const query = searchInput.value.toLowerCase();
+    const rows = document.querySelectorAll(".rows-with-ingredients");
+
+    rows.forEach((row) => {
+      const name = row.dataset.name.toLowerCase();
+
+      if (name.includes(query)) {
+        row.style.display = "table-row";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
 }
 
 let deleteButtonId = 1;
 
 function makeRows(rows) {
   const trows = rows
-    .map((ingredients) => {
+    .map((ingredient) => {
       const deleteButtonIdString = `btn-delete-ingredient-${deleteButtonId}`;
       deleteButtonId++; // Increment the counter for the next ID
-      const formattedPrice = ingredients.price.toLocaleString("da-DK", {
+      const formattedPrice = ingredient.price.toLocaleString("da-DK", {
         style: "currency",
         currency: "DKK",
       });
 
       return `
-      <tr class="rows-with-ingredients" data-price="${ingredients.price}" data-name="${ingredients.name}">
-        <td>${ingredients.name}</td>
-        <td style="text-align: right;">${formattedPrice}</td>
-        <td>${ingredients.measurementType}</td>
-        <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
-      </tr>
-    `;
+        <tr class="rows-with-ingredients" data-price="${ingredient.price}" data-name="${ingredient.name}">
+          <td>${ingredient.name}</td>
+          <td style="text-align: right;">${formattedPrice}</td>
+          <td>${ingredient.measurementType}</td>
+          <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
+        </tr>
+      `;
     })
     .join("\n");
-  document.getElementById("ingredients-rows").innerHTML = trows;
+
+  document.getElementById("ingredients-table-body").innerHTML = trows;
+
   document.querySelectorAll(".sort-button").forEach((button) =>
-  button.addEventListener("click", handleSort));
-  document.getElementById("ingredients-rows").addEventListener("click", handleDeleteIngredient);
+    button.addEventListener("click", handleSort)
+  );
+  document
+    .getElementById("ingredients-table-body")
+    .addEventListener("click", handleDeleteIngredient);
 }
 
 export async function handleDeleteIngredient(event) {

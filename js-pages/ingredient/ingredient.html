@@ -27,23 +27,23 @@
           </form>
         </div>
               </div>
-<div class="ingredients_content" id="seeIngredient" style="display: block">
-    <h3 id="ingredients-header">
-      <span>All ingredients</span>
-    </h3>
-    <table class="ingredients-rows">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Price
-            <button class="sort-button" data-sort="price"></button>
-          </th>
-          <th>MeasurementType</th>
-        </tr>
-      </thead>
-      <tbody id="ingredients-rows">
-      </tbody>
-    </table>
-  </div>
+              <div class="ingredients_content" id="seeIngredient" style="display: block">
+                <h3 id="ingredients-header">
+                  <span>All ingredients</span>
+                </h3>
+                <input type="text" id="ingredient-searchInput" class="search-input" placeholder="Search...">
+                <button class="sort-button" data-sort="price"></button>
+                <table class="ingredients-rows">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>MeasurementType</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ingredients-table-body">
+                  </tbody>
+                </table>
+              </div>
 </form>
 </template>

@@ -6,38 +6,36 @@ import {getAllRecipeLines} from "../recipeLine/recipeLine.js";
 
 const URL = LOCAL_SERVER_URL+"api/recipes"
 
-    export function getAllRecipes() {
-      fetch(URL)
-      .then(res => res.json())
-      .then(recipes => {
-        makeRows(recipes);
-      })
-      .catch(e => console.error(e));    
-      const searchInput = document.getElementById("searchInput");
-    
-      searchInput.addEventListener("input", handleSearch);
-    
-      function handleSearch() {
-        const query = searchInput.value.toLowerCase();
-        const rows = document.querySelectorAll(".recipe-row");
-    
-        rows.forEach((row) => {
-          const name = row.dataset.recipe.toLowerCase();
-          const description = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
-          const mealType = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
-    
-          if (
-            name.includes(query) ||
-            description.includes(query) ||
-            mealType.includes(query)
-          ) {
-            row.style.display = "table-row";
-          } else {
-            row.style.display = "none";
-          }
-        });
+export function getAllRecipes() {
+  fetch(URL)
+    .then(res => res.json())
+    .then(recipes => {
+      makeRows(recipes);
+    })
+    .catch(e => console.error(e));
+  
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", handleSearch);
+
+  function handleSearch() {
+    const query = searchInput.value.toLowerCase();
+    const rows = document.querySelectorAll("#recipe-list tr");
+
+    rows.forEach(row => {
+      const name = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+      const description = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+      const mealType = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+
+      if (name.includes(query) || description.includes(query) || mealType.includes(query)) {
+        row.style.display = "table-row";
+      } else {
+        row.style.display = "none";
       }
-    }
+    });
+  }
+}
+
+
     
 
 let deleteButtonId = 1;
@@ -161,7 +159,7 @@ let sortDirection = 1;
 function handleSort(event) {
   event.preventDefault();
 
-  const rows = Array.from(document.querySelectorAll(".recipe-rows"));
+  const rows = Array.from(document.querySelectorAll(".recipe-row"));
   const sortedRows = rows.sort((a, b) => {
     const aPrice = parseFloat(a.getAttribute("data-price"));
     const bPrice = parseFloat(b.getAttribute("data-price"));

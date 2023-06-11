@@ -148,9 +148,8 @@ table th {
   box-shadow: 0 0 5px rgba(81, 203, 238, 1);
 }
 
-/* Add this CSS to your existing recipe.css file or create a new one */
 
-/* Add Recipe Form */
+
 #addRecipeForm {
   background-color: #f5f5f5;
   padding: 20px;
