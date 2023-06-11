@@ -36,8 +36,6 @@ export function getAllRecipes() {
 }
 
 
-    
-
 let deleteButtonId = 1;
 
 function makeRows(rows) {
@@ -107,7 +105,7 @@ export async function handleRecipeRowClick(event) {
 
 
 export function getRecipeDetails(recipeName) {
-  const recipeDetailsURL = `${URL}/${encodeURIComponent(recipeName)}`;
+  const recipeDetailsURL = `${URL}/${encodeURIComponent(recipeName, )}`;
 
   fetch(recipeDetailsURL)
     .then(res => res.json())

@@ -28,9 +28,9 @@
 <body style="font-family: sans-serif">
 
   <nav class="navbar navbar-expand-lg">
-    <div id="menu-not-logged-in" class="container-fluid">
+    <div id="loggedOutMenu" class="container-fluid">
 
-      <a class="navbar-brand" href="#">Recepies</a>
+      <a class="navbar-brand" href="#">Recipes</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -45,30 +45,15 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/ingredients" data-navigo>Ingredients</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/recipe" data-navigo>Recipes</a>
-          </li>
-
-          <li class="nav-item">
             <a class="nav-link" href="/register" data-navigo>Sign up</a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/recipeLine" data-navigo>recipeLine</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/recipeDetails" data-navigo>recipeDetails</a>
-          </li>
         </ul>
       </div>
     </div>
 
-    <div id="menu-logged-in" class="container-fluid">
-
+    
+    <div id="loggedInMenu" class="container-fluid">
       <a class="navbar-brand" href="#">Recipes</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,13 +68,16 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/logout" data-navigo>Log out</a>
+            <a class="nav-link" href="/ingredients" data-navigo>Ingredients</a>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link" href="/logout" data-navigo>Log out</a>
+          </li>
           
         </ul>
       </div>
-    </div>
+    </div> 
   </nav>
 
   <div id="content"></div>
@@ -101,4 +89,3 @@
 </body>
 
 </html>
-

@@ -55,9 +55,8 @@ function makeRows(rows) {
 
   document.getElementById("ingredients-table-body").innerHTML = trows;
 
-  document.querySelectorAll(".sort-button").forEach((button) =>
-    button.addEventListener("click", handleSort)
-  );
+  document.getElementById("sort-price").addEventListener("click", handleSort);
+
   document
     .getElementById("ingredients-table-body")
     .addEventListener("click", handleDeleteIngredient);
@@ -120,35 +119,27 @@ function hideIngredientForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
-let sortDirection = {
-  price: 1,
-  name: 1,
-};
+let sortDirection =  1;
 
 function handleSort(event) {
-  event.preventDefault()
-  const sortOrder = this.dataset.sort;
+  event.preventDefault();
+
   const rows = Array.from(document.querySelectorAll(".rows-with-ingredients"));
   const sortedRows = rows.sort((a, b) => {
-    const aValue = a.getAttribute(`data-${sortOrder}`);
-    const bValue = b.getAttribute(`data-${sortOrder}`);
-
-    if (sortOrder === "price") {
-      const aPrice = parseFloat(a.getAttribute("data-price"));
-      const bPrice = parseFloat(b.getAttribute("data-price"));
-      return (aPrice - bPrice) * sortDirection.price;
-    } else if (sortOrder === "name") {
-      return aValue.localeCompare(bValue) * sortDirection.name;
-    }
+    const aPrice = parseFloat(a.getAttribute("data-price"));
+    const bPrice = parseFloat(b.getAttribute("data-price"));
+    return (aPrice - bPrice) * sortDirection;
   });
 
-  sortDirection[sortOrder] *= -1;
+  sortDirection *= -1;
 
-  const tableBody = document.getElementById("ingredients-rows");
-  tableBody.innerHTML = "";
-  sortedRows.forEach((row) => tableBody.appendChild(row));
+  const recipeList = document.getElementById("ingredients-table-body");
+  recipeList.innerHTML = "";
+  sortedRows.forEach((row) => {
+    recipeList.appendChild(row);
+  });
 
-  const button = document.querySelector(`.sort-button[data-sort="${sortOrder}"]`);
-  button.classList.toggle("asc", sortDirection[sortOrder] === 1);
-  button.classList.toggle("desc", sortDirection[sortOrder] === -1);
+  const button = document.getElementById("sort-price");
+  button.classList.toggle("asc", sortDirection === 1);
+  button.classList.toggle("desc", sortDirection === -1);
 }

@@ -5,8 +5,7 @@ import {setupLoginHandlers } from "./js-pages/login/login.js"
 import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers, handleDeleteIngredient} from "./js-pages/ingredient/ingredient.js"
 import {getAllRecipes, addRecipeElement, handleRecipeRowClick} from "./js-pages/recipe/recipe.js"
 import { getAllRecipeLines, setupRecipeLineFormHandlers, addRecipeLinesElement, handleDeleteLine, handleEditRecipe } from "./js-pages/recipeLine/recipeLine.js"
-
-//import { getRecipeDetails } from "./js-pages/recipeDetails/recipeDetails.js"
+import { showMenu, isLoggedIn } from "./js-pages/home/menu.js"
 
 
 
@@ -23,7 +22,6 @@ window.addEventListener("load", async () => {
 
   const router = new Navigo("/", { hash: true });
 
-  //showMenu()
   
   adjustForMissingHash()
   router
@@ -34,13 +32,7 @@ window.addEventListener("load", async () => {
       }
     })
 
-    .on("/", () => {
-      if (isLoggedIn()) {
-        renderTemplate(templateLoggedIn, "content");
-      } else {
-        renderTemplate(templateNotLoggedIn, "content");
-      }
-    })
+  
 
 
     .on( "/login", () => {
@@ -82,6 +74,7 @@ window.addEventListener("load", async () => {
 
     })
 
+    showMenu()
 
   });
      

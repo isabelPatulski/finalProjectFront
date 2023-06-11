@@ -32,12 +32,13 @@
                   <span>All ingredients</span>
                 </h3>
                 <input type="text" id="ingredient-searchInput" class="search-input" placeholder="Search...">
-                <button class="sort-button" data-sort="price"></button>
                 <table class="ingredients-rows">
                   <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Price</th>
+                      <th>Price
+                        <button id="sort-price" class="sort-button" data-sort="price"></button>
+                      </th>
                       <th>MeasurementType</th>
                     </tr>
                   </thead>
