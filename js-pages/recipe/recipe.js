@@ -64,9 +64,9 @@ function makeRows(rows) {
     .join("\n");
   document.getElementById("recipe-list").innerHTML = trows;
 
-  const recipeRows = document.getElementsByClassName("recipe-rows");
+  const recipeRows = document.getElementsByClassName("recipe-row");
   Array.from(recipeRows).forEach((row) => {
-    row.addEventListener("click", handleRecipeRowClick);
+    document.getElementById("recipe-list").addEventListener("click", handleRecipeRowClick);
   });
 
   document.getElementById("sort-price").addEventListener("click", handleSort);
