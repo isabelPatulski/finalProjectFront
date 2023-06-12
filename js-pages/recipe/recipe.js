@@ -75,19 +75,23 @@ export async function handleDeleteRecipe(event) {
     const row = event.target.parentNode.parentNode;
     const recipeName = row.querySelector("td:first-child").textContent;
 
-    try {
-      const response = await fetch(`${URL}/${encodeURIComponent(recipeName)}`, makeOptions("DELETE"));
+    const confirmation = confirm("Are you sure you want to delete this recipe?");
 
-      if (response.ok) {
-        row.remove();
-      } else {
-        throw new Error("Delete request failed");
+    if (confirmation) {
+      try {
+        const response = await fetch(`${URL}/${encodeURIComponent(recipeName)}`, makeOptions("DELETE"));
+
+        if (response.ok) {
+          row.remove();
+        } else {
+          throw new Error("Delete request failed");
+        }
+      } catch (error) {
+        console.error(error.message);
       }
-    } catch (error) {
-      console.error(error.message);
     }
+    event.stopPropagation();         //Gør så den ikke hopper ind på "recicpe Details" siden
 
-    event.stopPropagation(); 
   }
 }
 
@@ -120,36 +124,48 @@ export function getRecipeDetails(recipeName) {
     .catch(error => console.error(error));
 }
 
+export async function showRecipeDetails(recipeName){
+  localStorage.setItem('selectedRecipe', recipeName);
+  document.location.href="http://127.0.0.1:5502/#/recipeLine";
+    getRecipeDetails(recipeName)
+    getAllRecipeLines(recipeName);
+}
 
 export function addRecipeElement() {
   document.getElementById("addRecipe").onclick = addRecipe;
 }
 
-export async function showRecipeDetails(recipeName){
-    localStorage.setItem('selectedRecipe', recipeName);
-    document.location.href="http://127.0.0.1:5502/#/recipeLine";
-      getRecipeDetails(recipeName)
-      getAllRecipeLines(recipeName);
-}
 
 function addRecipe(event) {
   event.preventDefault();
-  const recipe = {};
-  recipe.name = document.getElementById("recipe-name").value;
-  recipe.mealType = document.getElementById("mealTypes").value;
-  recipe.description = document.getElementById("recipe-description").value;
+  
+  const recipeName = document.getElementById("recipe-name").value;
+  const mealType = document.getElementById("mealTypes").value;
+  const recipeDescription = document.getElementById("recipe-description").value;
+
+  if (!recipeName || !mealType || !recipeDescription) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const recipe = {
+    name: recipeName,
+    mealType: mealType,
+    description: recipeDescription
+  };
 
   fetch(URL, makeOptions("POST", recipe))
     .then(res => res.json())
     .then(newRecipe => {
-      const recipeName = encodeURIComponent(newRecipe.name);
-      const params = new URLSearchParams({ name: recipeName });
+      const encodedRecipeName = encodeURIComponent(newRecipe.name);
+      const params = new URLSearchParams({ name: encodedRecipeName });
     })
     .catch(error => console.error(error));
 
-    document.location.href="http://127.0.0.1:5502/#/recipeLine";
-    getRecipeDetails(recipe.name)
-  }
+    document.location.href = "http://127.0.0.1:5502/#/recipe";
+    window.location.reload();  
+}
+
 
   
 let sortDirection = 1;

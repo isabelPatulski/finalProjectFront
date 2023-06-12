@@ -5,7 +5,8 @@ import {setupLoginHandlers } from "./js-pages/login/login.js"
 import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers, handleDeleteIngredient} from "./js-pages/ingredient/ingredient.js"
 import {getAllRecipes, addRecipeElement, handleRecipeRowClick} from "./js-pages/recipe/recipe.js"
 import { getAllRecipeLines, setupRecipeLineFormHandlers, addRecipeLinesElement, handleDeleteLine, handleEditRecipe } from "./js-pages/recipeLine/recipeLine.js"
-import { showMenu, isLoggedIn } from "./js-pages/home/menu.js"
+import { showMenu} from "./js-pages/home/menu.js"
+import { setupLogoutHandler } from "./js-pages/logOut/logOut.js"
 
 
 
@@ -74,6 +75,11 @@ window.addEventListener("load", async () => {
 
     })
 
+    .on( "/logout", () => {
+      //setupLogoutHandler()
+
+    })
+    setupLogoutHandler();
     showMenu()
 
   });

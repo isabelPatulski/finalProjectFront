@@ -8,22 +8,33 @@ export function setupRegisterHandlers() {
 }
 
 function registerUser(event) {
-    event.preventDefault();
+  event.preventDefault();
   const user = {};
   user.email = document.getElementById("input-email").value;
   user.password = document.getElementById("input-password").value;
+  const confirmPassword = document.getElementById("input-confirm-password").value;
 
-  console.log(user);
+  if (user.password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  if (!validateEmail(user.email)) {
+    alert("Invalid email address");
+    return;
+  }
 
   fetch(URL, makeOptions("POST", user))
     .then(res => handleErrors(res))
     .then(newUser => {
       document.getElementById("btn-register").innerText = JSON.stringify(newUser);
-      redirectToLogin(); // Redirect to login page
+      location.replace("http://127.0.0.1:5502/?#/login");
     })
     .catch(error => console.error(error));
 }
 
-function redirectToLogin() {
-  window.location.href = "http://127.0.0.1:5502/#/login";
+function validateEmail(email) {
+  const emailFormat = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+  return emailFormat.test(email);
 }
+

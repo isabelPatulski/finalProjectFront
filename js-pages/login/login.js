@@ -23,7 +23,8 @@ async function login(event) {
     .then(res => handleErrors(res))
     .then(newUser => {
       document.getElementById("btn-login").innerText = JSON.stringify(newUser);
-      // Redirect to front page or perform other actions
+      // Reload the page after successful login
+      window.location.reload();
     })
     .catch(error => {
       console.error(error);

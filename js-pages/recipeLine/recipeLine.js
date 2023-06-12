@@ -138,11 +138,11 @@ export async function setupRecipeLineFormHandlers() {
 }
 
 function showRecipeLineForm(event) {
-  event.preventDefault(); // Prevent form submission and page refresh
+  event.preventDefault(); 
   document.getElementById("myForm").style.display = "block";
 
   let ingredientsDropdown = document.getElementById("ingredientsDrop");
-  ingredientsDropdown.innerHTML = ""; // Clear existing options
+  ingredientsDropdown.innerHTML = ""; 
 
   let defaultOption = new Option('Select ingredient', '', true, true);
   defaultOption.disabled = true;
