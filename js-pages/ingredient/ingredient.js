@@ -100,8 +100,8 @@ function addIngredient() {
     })
     .catch((error) => console.error(error));
 }
-
-export async function setupIngredientFormHandlers() {
+///FJERNET AASYNC
+export function setupIngredientFormHandlers() {
   const addButton = document.getElementById("open-button");
   const closeButton = document.getElementById("btnCancel");
 

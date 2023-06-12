@@ -57,26 +57,24 @@ window.addEventListener("load", async () => {
         
     })
 
-    .on( "/recipe", () => {
+    .on( "/recipe", (event) => {
       renderTemplate(templateRecipe, "content")
       getAllRecipes()
-      addRecipeElement()
-      handleRecipeRowClick()
+      addRecipeElement(event)
+      handleRecipeRowClick(event)
 
     })
 
-    .on( "/recipeLine", () => {
+    .on( "/recipeLine", (event) => {
       renderTemplate(templateRecipeLine, "content")
       getAllRecipeLines()
       setupRecipeLineFormHandlers()
       addRecipeLinesElement()
-      handleDeleteLine()
       handleEditRecipe()
 
     })
 
     .on( "/logout", () => {
-      //setupLogoutHandler()
 
     })
     setupLogoutHandler();

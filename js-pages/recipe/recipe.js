@@ -60,14 +60,17 @@ function makeRows(rows) {
     .join("\n");
   document.getElementById("recipe-list").innerHTML = trows;
 
+  document.getElementById("sort-price").addEventListener("click", handleSort);
+
   const recipeRows = document.getElementsByClassName("recipe-row");
   Array.from(recipeRows).forEach((row) => {
-    document.getElementById("recipe-list").addEventListener("click", handleRecipeRowClick);
+    row.addEventListener("click", (event) => handleRecipeRowClick(event));
+    const deleteButton = row.querySelector('input[type="button"]');
+  deleteButton.addEventListener("click", (event) => handleDeleteRecipe(event));
   });
-
-  document.getElementById("sort-price").addEventListener("click", handleSort);
-  document.getElementById("recipe-list").addEventListener("click", handleDeleteRecipe);
 }
+
+
 
 export async function handleDeleteRecipe(event) {
   if (event.target.nodeName === "INPUT" && event.target.type === "button") {
@@ -96,14 +99,15 @@ export async function handleDeleteRecipe(event) {
 }
 
   
-
-export async function handleRecipeRowClick(event) {
+//!!!!! fjernet async
+export function handleRecipeRowClick(event) {
   const clickedElement = event.target;
-  const recipeName = clickedElement.closest("tr").dataset.recipe;
-
-  if (!clickedElement.matches('input[type="button"]')) {
-    localStorage.setItem("selectedRecipe", recipeName);
-    showRecipeDetails(recipeName);
+  if (clickedElement && clickedElement.closest(".recipe-row")) {
+    const recipeName = clickedElement.closest(".recipe-row").dataset.recipe;
+    if (!clickedElement.matches('input[type="button"]')) {
+      localStorage.setItem("selectedRecipe", recipeName);
+      showRecipeDetails(recipeName);
+    }
   }
 }
 
@@ -124,7 +128,8 @@ export function getRecipeDetails(recipeName) {
     .catch(error => console.error(error));
 }
 
-export async function showRecipeDetails(recipeName){
+//!!!!! fjernet async
+export function showRecipeDetails(recipeName){
   localStorage.setItem('selectedRecipe', recipeName);
   document.location.href="http://127.0.0.1:5502/#/recipeLine";
     getRecipeDetails(recipeName)
@@ -138,7 +143,7 @@ export function addRecipeElement() {
 
 function addRecipe(event) {
   event.preventDefault();
-  
+
   const recipeName = document.getElementById("recipe-name").value;
   const mealType = document.getElementById("mealTypes").value;
   const recipeDescription = document.getElementById("recipe-description").value;
@@ -151,20 +156,20 @@ function addRecipe(event) {
   const recipe = {
     name: recipeName,
     mealType: mealType,
-    description: recipeDescription
+    description: recipeDescription,
   };
 
   fetch(URL, makeOptions("POST", recipe))
-    .then(res => res.json())
-    .then(newRecipe => {
+    .then((res) => res.json())
+    .then((newRecipe) => {
       const encodedRecipeName = encodeURIComponent(newRecipe.name);
       const params = new URLSearchParams({ name: encodedRecipeName });
-    })
-    .catch(error => console.error(error));
 
-    document.location.href = "http://127.0.0.1:5502/#/recipe";
-    window.location.reload();  
+      window.location.href = `http://127.0.0.1:5502/#/recipe?${params}`;
+    })
+    .catch((error) => console.error(error));
 }
+
 
 
   

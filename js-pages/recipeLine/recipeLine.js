@@ -79,33 +79,36 @@ export function calculateTotalPrice(recipeLines) {
 }
 
 
-
 export async function handleDeleteLine(event) {
-  //Same function as in ingredient.js, but instead of ingredientName as an attribute it has RecipeLineID
   if (event.target.nodeName === "INPUT" && event.target.type === "button") {
-    const buttonId = event.target.id;
-    const row = event.target.parentNode.parentNode;
-    const recipeLineID = row.querySelector("td:first-child").textContent;
-
     const confirmed = confirm("Are you sure you want to delete this?");
     if (confirmed) {
-    try {
-      const response = await fetch(`${URL}/${encodeURIComponent(recipeLineID)}`, makeOptions("DELETE"));
+      try {
+        const row = event.target.closest("tr");
+        const recipeLineID = row.querySelector("td:first-child").textContent;
 
-      if (response.ok) {
-        row.remove();
+        const response = await fetch(`${URL}/${encodeURIComponent(recipeLineID)}`, makeOptions("DELETE"));
+
+        if (response.ok) {
+          row.remove();
         } else {
-        throw new Error("Delete request failed");
+          throw new Error("Delete request failed");
         }
       } catch (error) {
-      console.error(error.message);
+        console.error(error.message);
       }
     }
   }
 }
 
-export function addRecipeLinesElement(){
-    document.getElementById("saveNewRecipeLine").onclick = addRecipeLine
+
+export function addRecipeLinesElement() {
+  document.getElementById("saveNewRecipeLine").onclick = addRecipeLine;
+
+  const deleteButtons = document.querySelectorAll(".delete-button");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", handleDeleteLine);
+  });
 }
 
 
@@ -125,15 +128,16 @@ function addRecipeLine() {
     .then(newRecipeLine => {
       document.getElementById("saveNewRecipeLine").innerText = JSON.stringify(newRecipeLine);
       getRecipeDetails(recipeLine.recipeName);
+      window.location.href = `http://127.0.0.1:5502/#/recipeLine?`;
     })
     .catch(error => console.error(error));
 
-  document.location.href = "http://127.0.0.1:5502/#/recipeLine";
-}
+    
+  }
 
 
-
-export async function setupRecipeLineFormHandlers() {
+//!!!!!!!!!!! fjernet async
+export function setupRecipeLineFormHandlers() {
   const addButton = document.getElementById("open-button");
   const closeButton = document.getElementById("btnCancel");
 

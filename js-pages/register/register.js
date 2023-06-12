@@ -27,7 +27,7 @@ function registerUser(event) {
   fetch(URL, makeOptions("POST", user))
     .then(res => handleErrors(res))
     .then(newUser => {
-      location.replace("http://127.0.0.1:5502/?#/login");
+      location.replace("http://127.0.0.1:5502/#/login");
     })
     .catch(error => console.error(error));
 }
