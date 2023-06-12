@@ -4,7 +4,7 @@ import {setupRegisterHandlers} from "./js-pages/register/register.js"
 import {setupLoginHandlers } from "./js-pages/login/login.js"
 import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers, handleDeleteIngredient} from "./js-pages/ingredient/ingredient.js"
 import {getAllRecipes, addRecipeElement, handleRecipeRowClick} from "./js-pages/recipe/recipe.js"
-import { getAllRecipeLines, setupRecipeLineFormHandlers, addRecipeLinesElement, handleDeleteLine, handleEditRecipe } from "./js-pages/recipeLine/recipeLine.js"
+import { getAllRecipeLines, setupRecipeLineFormHandlers, addRecipeLinesElement, handleEditRecipe, printRecipeElement } from "./js-pages/recipeLine/recipeLine.js"
 import { showMenu} from "./js-pages/home/menu.js"
 import { setupLogoutHandler } from "./js-pages/logOut/logOut.js"
 
@@ -71,6 +71,7 @@ window.addEventListener("load", async () => {
       setupRecipeLineFormHandlers()
       addRecipeLinesElement()
       handleEditRecipe()
+      printRecipeElement()
 
     })
 

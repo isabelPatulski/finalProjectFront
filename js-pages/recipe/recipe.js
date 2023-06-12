@@ -169,9 +169,6 @@ function addRecipe(event) {
     })
     .catch((error) => console.error(error));
 }
-
-
-
   
 let sortDirection = 1;
 
@@ -196,4 +193,23 @@ function handleSort(event) {
   const button = document.getElementById("sort-price");
   button.classList.toggle("asc", sortDirection === 1);
   button.classList.toggle("desc", sortDirection === -1);
+}
+
+
+export function printRecipe()
+{
+  let recipeName = document.getElementById("recipe-name").innerText;
+  let printHtml = "<html><head><title>"
+  + recipeName+"</title></head><body>"
+  + "<div id=RecipeHeader>"
+  + "<H1>Recipe: "+recipeName+"</H1><br>"
+  + "<H2>Mealtype: "+document.getElementById("meal-type").innerHTML+"</H2><br>"
+  + "<H2>Description: "+document.getElementById("recipe-description").innerHTML+"</H2><br>"
+  + "</div>"
+  +document.getElementById("seeRecipeLine").innerHTML
+  +"</body></html>";
+  var printWindow = window.open("");
+  printWindow.document.write(printHtml);  
+  printWindow.print();
+  printWindow.close();
 }

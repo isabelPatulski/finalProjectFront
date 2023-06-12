@@ -1,6 +1,7 @@
 import {LOCAL_SERVER_URL} from "../../settings.js"
 import {handleErrors, makeOptions} from "../../fetchUtils.js";
 import {getRecipeDetails} from "../recipe/recipe.js";
+import { printRecipe } from "../recipe/recipe.js";
 
 const URL = LOCAL_SERVER_URL+"api/recipeLines"
 const URLIngredients = LOCAL_SERVER_URL+"api/ingredients"
@@ -234,20 +235,6 @@ function handleCancel(event) {
   document.querySelector('.popup-overlay').style.display = 'none';
 }
 
-export function printRecipe()
-{
-  let recipeName = document.getElementById("recipe-name").innerText;
-  let printHtml = "<html><head><title>"
-  + recipeName+"</title></head><body>"
-  + "<div id=RecipeHeader>"
-  + "<H1>Recipe: "+recipeName+"</H1><br>"
-  + "<H2>Mealtype: "+document.getElementById("meal-type").innerHTML+"</H2><br>"
-  + "<H2>Description: "+document.getElementById("recipe-description").innerHTML+"</H2><br>"
-  + "</div>"
-  +document.getElementById("seeRecipeLine").innerHTML
-  +"</body></html>";
-  var printWindow = window.open("");
-  printWindow.document.write(printHtml);  
-  printWindow.print();
-  printWindow.close();
+export function printRecipeElement(){
+  document.getElementById("print-button").onclick = printRecipe;
 }
