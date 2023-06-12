@@ -57,10 +57,12 @@ function makeRows(rows) {
 
   document.getElementById("sort-price").addEventListener("click", handleSort);
 
-  document
-    .getElementById("ingredients-table-body")
-    .addEventListener("click", handleDeleteIngredient);
+  const deleteButtons = document.querySelectorAll(".rows-with-ingredients input[type='button']");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", handleDeleteIngredient);
+  });
 }
+
 
 export async function handleDeleteIngredient(event) {
   if (event.target.nodeName === "INPUT" && event.target.type === "button") {

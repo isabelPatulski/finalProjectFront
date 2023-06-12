@@ -53,7 +53,6 @@ window.addEventListener("load", async () => {
       getAllIngredients()    
       setupIngredientFormHandlers()
       addIngredientElement()
-      handleDeleteIngredient()
         
     })
 
