@@ -22,7 +22,6 @@ async function login(event) {
   await fetch(URL+'/login', makeOptions("POST", credentials))
     .then(res => handleErrors(res))
     .then(newUser => {
-      document.getElementById("btn-login").innerText = JSON.stringify(newUser);
       // Reload the page after successful login
       window.location.reload();
     })

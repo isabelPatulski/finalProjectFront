@@ -27,7 +27,6 @@ function registerUser(event) {
   fetch(URL, makeOptions("POST", user))
     .then(res => handleErrors(res))
     .then(newUser => {
-      document.getElementById("btn-register").innerText = JSON.stringify(newUser);
       location.replace("http://127.0.0.1:5502/?#/login");
     })
     .catch(error => console.error(error));

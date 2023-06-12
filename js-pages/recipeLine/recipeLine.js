@@ -38,6 +38,10 @@ return ingredientDetailsPromise.then(ingredient => {
 // Calculate the price based on ingredient price and recipe line amount
 const price = ingredient.price * recipeLines.amount;
       totalPrice += price;
+const formattedPrice = price.toLocaleString("da-DK", {
+      style: "currency",
+      currency: "DKK",
+    });
 return `
   <tr class="rows-with-recipeLines">
     <td hidden>${recipeLines.id}</td>
@@ -45,7 +49,7 @@ return `
     <td>${ingredient.measurementType}</td>
     <td>${recipeLines.amount}</td>
     <td hidden>${recipeLines.recipeName}</td>
-    <td>${price}</td>
+    <td style="text-align: right;">${formattedPrice}</td>
     <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
   </tr>
       `;
@@ -224,4 +228,22 @@ function handleSave(event) {
 function handleCancel(event) {
   event.preventDefault();
   document.querySelector('.popup-overlay').style.display = 'none';
+}
+
+export function printRecipe()
+{
+  let recipeName = document.getElementById("recipe-name").innerText;
+  let printHtml = "<html><head><title>"
+  + recipeName+"</title></head><body>"
+  + "<div id=RecipeHeader>"
+  + "<H1>Recipe: "+recipeName+"</H1><br>"
+  + "<H2>Mealtype: "+document.getElementById("meal-type").innerHTML+"</H2><br>"
+  + "<H2>Description: "+document.getElementById("recipe-description").innerHTML+"</H2><br>"
+  + "</div>"
+  +document.getElementById("seeRecipeLine").innerHTML
+  +"</body></html>";
+  var printWindow = window.open("");
+  printWindow.document.write(printHtml);  
+  printWindow.print();
+  printWindow.close();
 }
