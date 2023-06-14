@@ -220,11 +220,15 @@ function handleSave(event) {
 
   // Send the updated recipe data to the backend
   fetch(URLRecipes + "/" + recipeName, makeOptions("PUT", updatedRecipe))
-    .then(res => res.json())
-    .then(updatedRecipe => {
-      document.getElementById("save-button").innerText = JSON.stringify(updatedRecipe)
+  .then(res => {
+    if (res.ok) {
+      document.getElementById("save-button").innerText = JSON.stringify(updatedRecipe);
       document.querySelector('.popup-overlay').style.display = 'none';
-    })
+      window.location.href = `http://127.0.0.1:5502/#/recipe`;
+    } else {
+      throw new Error("Save request failed");
+    }
+  })
     .catch(error => {
       console.error(error);
     });

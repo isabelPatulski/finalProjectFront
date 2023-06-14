@@ -2,7 +2,7 @@ import "https://unpkg.com/navigo"  //Will create the global Navigo object used b
 import {setActiveLink, loadTemplate, renderTemplate, adjustForMissingHash } from "./utils.js"
 import {setupRegisterHandlers} from "./js-pages/register/register.js"
 import {setupLoginHandlers } from "./js-pages/login/login.js"
-import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers, handleDeleteIngredient} from "./js-pages/ingredient/ingredient.js"
+import {addIngredientElement, getAllIngredients, setupIngredientFormHandlers} from "./js-pages/ingredient/ingredient.js"
 import {getAllRecipes, addRecipeElement, handleRecipeRowClick} from "./js-pages/recipe/recipe.js"
 import { getAllRecipeLines, setupRecipeLineFormHandlers, addRecipeLinesElement, handleEditRecipe, printRecipeElement } from "./js-pages/recipeLine/recipeLine.js"
 import { showMenu} from "./js-pages/home/menu.js"
@@ -48,9 +48,9 @@ window.addEventListener("load", async () => {
 
     })
 
-    .on( "/ingredients", () => {
+    .on( "/ingredients", (event) => {
       renderTemplate(templateIngredients,"content")
-      getAllIngredients()    
+      getAllIngredients(event)    
       setupIngredientFormHandlers()
       addIngredientElement()
         

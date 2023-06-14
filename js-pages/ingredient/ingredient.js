@@ -64,7 +64,7 @@ function makeRows(rows) {
 }
 
 
-export async function handleDeleteIngredient(event) {
+async function handleDeleteIngredient(event) {
   if (event.target.nodeName === "INPUT" && event.target.type === "button") {
     const buttonId = event.target.id;
     const row = event.target.parentNode.parentNode;
@@ -72,7 +72,6 @@ export async function handleDeleteIngredient(event) {
 
     try {
       const response = await fetch(`${URL}/${encodeURIComponent(ingredientName)}`, makeOptions("DELETE"));
-      console.log(response); // Log the response
 
       if (response.ok) {
         row.remove();
@@ -99,10 +98,12 @@ function addIngredient() {
     .then((res) => res.json())
     .then((newIngredient) => {
       document.getElementById("saveNewIngredient").innerText = JSON.stringify(newIngredient);
+      window.location.href = `http://127.0.0.1:5502/#/ingredients`;
     })
     .catch((error) => console.error(error));
 }
-///FJERNET AASYNC
+
+
 export function setupIngredientFormHandlers() {
   const addButton = document.getElementById("open-button");
   const closeButton = document.getElementById("btnCancel");
