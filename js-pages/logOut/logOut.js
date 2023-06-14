@@ -7,7 +7,7 @@ export function setupLogoutHandler() {
   document.getElementById("btn-logout").onclick = logout;
 }
 
-async function logout() { //!!!!!! tilføjet await
+async function logout() { 
   await fetch(URL + "/logout", makeOptions("POST"))
     .then(res => {
       if (!res.ok) {

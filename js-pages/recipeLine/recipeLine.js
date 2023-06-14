@@ -8,12 +8,12 @@ const URLIngredients = LOCAL_SERVER_URL+"api/ingredients"
 const URLRecipes = LOCAL_SERVER_URL+"api/recipes"
 
 
-
 export function getAllRecipeLines(){
+  //Fetch til backend for at kunne hente RecipeLines fra backend
   fetch(URL)
   .then(res=>res.json())
   .then(recipeLines=>{
-    
+   //Benytter makeRows functionen 
   makeRows(recipeLines)
     
   })
@@ -23,20 +23,23 @@ export function getAllRecipeLines(){
 let deleteButtonId = 1; 
 
 function makeRows(rows) {
+  //Bruges i recipeDetails (Tror jeg?) Eller bliver variablen bare gemt lokalt? Flemming
   const recipeName = localStorage.getItem('selectedRecipe');
+  //Sørger for de rækker der bliver vist på siden kun er dem der matcher det recipeName der er blevet klikket på
   const filteredRows = rows.filter(recipeLines => recipeLines.recipeName === recipeName);
 
   let totalPrice = 0;
 
   const trows = filteredRows.map(recipeLines => {
+    //Sætter delete button ved hver row
     const deleteButtonIdString = `btn-delete-recipeLine-${deleteButtonId}`;
     deleteButtonId++;
-
+//Flemming
 const ingredientDetailsPromise = fetch(`${URLIngredients}/${encodeURIComponent(recipeLines.ingredientName)}`)
 .then(res => res.json());
 
 return ingredientDetailsPromise.then(ingredient => {
-// Calculate the price based on ingredient price and recipe line amount
+// Beregner prisen 
 const price = ingredient.price * recipeLines.amount;
       totalPrice += price;
 const formattedPrice = price.toLocaleString("da-DK", {
@@ -57,18 +60,17 @@ return `
     });
   });
 
-
-  // Set the HTML rows in the target element
+  //VEd ikke om det her overhovedet er nødvendigt mere når nu vi bruger din måde istedet?
   Promise.all(trows).then(htmlRows => {
     const totalPriceField = document.getElementById("recipeTotalPrice");
     totalPriceField.textContent = `Total Price: ${totalPrice.toFixed(2)}`; // Display the total price with two decimal places
     document.getElementById("recipeLines-rows").innerHTML = htmlRows.join("\n");
 
-    // Handle the delete
+    //Eventhandler til delete af recipeLine
     document.getElementById("recipeLines-rows").addEventListener("click", handleDeleteLine);
   });
 }
-
+//Igen -skal det bare slettes?
 export function calculateTotalPrice(recipeLines) {
   let totalPrice = 0;
 
@@ -79,7 +81,7 @@ export function calculateTotalPrice(recipeLines) {
   return totalPrice;
 }
 
-
+//Flemming
 export async function handleDeleteLine(event) {
   if (event.target.nodeName === "INPUT" && event.target.type === "button") {
     const confirmed = confirm("Are you sure you want to delete this?");
@@ -174,7 +176,7 @@ function hideRecipeLineForm() {
 }
 
 // EDIT 
-let recipeName; // Declare recipeName variable at a higher scope
+let recipeName; 
 
 export function handleEditRecipe() {
   document.querySelector('.edit-button').addEventListener('click', openEditPopup);
@@ -182,12 +184,12 @@ export function handleEditRecipe() {
 
 function openEditPopup(event) {
   event.preventDefault();
-  // Get the current recipe details
+  // Få detaljerne om recipe som de er nu
   recipeName = document.querySelector('.recipe-name').textContent;
   const recipeDescription = document.querySelector('.recipe-description').textContent;
   const mealType = document.querySelector('.meal-type').textContent;
 
-  // Set the values in the edit popup
+  // Sæt værdierne i pop up formen 
   document.getElementById('edit-name').textContent = recipeName;
   document.getElementById('edit-description').value = recipeDescription;
   document.getElementById('edit-meal-type').value = mealType;
@@ -197,7 +199,7 @@ function openEditPopup(event) {
   const saveButton = document.querySelector('.save-button');
   const cancelButton = document.querySelector('.cancel-button');
 
-  // Remove any existing click event listeners
+  // Fjern mulige eventhandlers der allerede eksistere (skulle tilføjes for den virkede korrekt)
   saveButton.removeEventListener('click', handleSave);
   cancelButton.removeEventListener('click', handleCancel);
 
@@ -206,13 +208,13 @@ function openEditPopup(event) {
   cancelButton.addEventListener('click', handleCancel);
 }
 
-
+//Bruges hvis man vælger at trykke "save"
 function handleSave(event) {
-  event.preventDefault();
+  event.preventDefault(); // Sikre der ikke sker automitisk refresh af siden(reload)
 
   const updatedDescription = document.getElementById('edit-description').value;
   const updatedMealType = document.getElementById('edit-meal-type').value;
-
+  //Nye værdier bliver sat
   const updatedRecipe = {
     description: updatedDescription,
     mealType: updatedMealType
@@ -224,7 +226,7 @@ function handleSave(event) {
     if (res.ok) {
       document.getElementById("save-button").innerText = JSON.stringify(updatedRecipe);
       document.querySelector('.popup-overlay').style.display = 'none';
-      window.location.href = `http://127.0.0.1:5502/#/recipe`;
+      window.location.href = `http://127.0.0.1:5502/#/recipe`; //Redirect, men det virker ikke
     } else {
       throw new Error("Save request failed");
     }
@@ -233,9 +235,9 @@ function handleSave(event) {
       console.error(error);
     });
 }
-
+//Bruges hvis man trykker cancel i popUp formen
 function handleCancel(event) {
-  event.preventDefault();
+  event.preventDefault(); // Sikre der ikke sker automitisk refresh af siden(reload)
   document.querySelector('.popup-overlay').style.display = 'none';
 }
 

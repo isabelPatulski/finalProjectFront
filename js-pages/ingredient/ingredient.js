@@ -1,9 +1,12 @@
 import { LOCAL_SERVER_URL } from "../../settings.js";
 import { handleErrors, makeOptions } from "../../fetchUtils.js";
 
+
+//URL matcher backendAPI
 const URL = LOCAL_SERVER_URL + "api/ingredients";
 
 export function getAllIngredients() {
+  //Fetcher alle ingredients fra backend og benytter "makeRows" functionen til at generer tabel til siden
   fetch(URL)
     .then((res) => res.json())
     .then((ingredients) => {
@@ -15,13 +18,14 @@ export function getAllIngredients() {
   searchInput.addEventListener("input", handleSearch);
 
   function handleSearch() {
-    const query = searchInput.value.toLowerCase();
+    //Søge funtion i tabel
+    const input = searchInput.value.toLowerCase(); //Sørger for userInput bliver sat til småt
     const rows = document.querySelectorAll(".rows-with-ingredients");
 
     rows.forEach((row) => {
       const name = row.dataset.name.toLowerCase();
-
-      if (name.includes(query)) {
+      //Alt der matcher input bliver vist i "table-rows"
+      if (name.includes(input)) {
         row.style.display = "table-row";
       } else {
         row.style.display = "none";
@@ -32,17 +36,18 @@ export function getAllIngredients() {
 
 let deleteButtonId = 1;
 
+//Bruges til at genere tabel - fetch sker i getAllIngredients
 function makeRows(rows) {
   const trows = rows
     .map((ingredient) => {
       const deleteButtonIdString = `btn-delete-ingredient-${deleteButtonId}`;
-      deleteButtonId++; // Increment the counter for the next ID
+      deleteButtonId++; //Sørger for der bliver talt én op
       const formattedPrice = ingredient.price.toLocaleString("da-DK", {
         style: "currency",
         currency: "DKK",
       });
 
-      return `
+      return ` 
         <tr class="rows-with-ingredients" data-price="${ingredient.price}" data-name="${ingredient.name}">
           <td>${ingredient.name}</td>
           <td style="text-align: right;">${formattedPrice}</td>
@@ -90,31 +95,36 @@ export function addIngredientElement() {
 
 function addIngredient() {
   const ingredient = {};
+  //Får infor fra bruger og gemmer i "const ingredient"
   ingredient.name = document.getElementById("input-name").value;
   ingredient.price = document.getElementById("input-price").value;
   ingredient.measurementType = document.getElementById("input-measurementType").value;
 
+  //Fetch til backend med den nye "ingredient"
   fetch(URL, makeOptions("POST", ingredient))
     .then((res) => res.json())
     .then((newIngredient) => {
       document.getElementById("saveNewIngredient").innerText = JSON.stringify(newIngredient);
+      //Forsøg på redirect, kan ikke få til at virke
       window.location.href = `http://127.0.0.1:5502/#/ingredients`;
     })
+    
     .catch((error) => console.error(error));
 }
 
 
 export function setupIngredientFormHandlers() {
+  //Definere min open og cancel button til min add ingredient form
   const addButton = document.getElementById("open-button");
   const closeButton = document.getElementById("btnCancel");
 
+  //Handlers til add og cancel button
   addButton.addEventListener("click", showIngredientForm);
   closeButton.addEventListener("click", hideIngredientForm);
 }
 
 function showIngredientForm(event) {
-  event.preventDefault(); // Prevent form submission and page refresh
-
+  event.preventDefault(); // Sikre der ikke sker automitisk refresh af siden(reload)
   document.getElementById("myForm").style.display = "block";
 }
 
@@ -125,9 +135,11 @@ function hideIngredientForm() {
 let sortDirection =  1;
 
 function handleSort(event) {
-  event.preventDefault();
+  event.preventDefault();// Sikre der ikke sker automitisk refresh af siden(reload)
 
+  //Forbereder array
   const rows = Array.from(document.querySelectorAll(".rows-with-ingredients"));
+  //Definere rækkefølgen der skal sorteres for pris i
   const sortedRows = rows.sort((a, b) => {
     const aPrice = parseFloat(a.getAttribute("data-price"));
     const bPrice = parseFloat(b.getAttribute("data-price"));
@@ -141,7 +153,7 @@ function handleSort(event) {
   sortedRows.forEach((row) => {
     recipeList.appendChild(row);
   });
-
+  //Knappens retning og look
   const button = document.getElementById("sort-price");
   button.classList.toggle("asc", sortDirection === 1);
   button.classList.toggle("desc", sortDirection === -1);
