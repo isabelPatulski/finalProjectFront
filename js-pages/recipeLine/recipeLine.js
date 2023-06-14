@@ -131,7 +131,7 @@ function addRecipeLine() {
     .then(newRecipeLine => {
       document.getElementById("saveNewRecipeLine").innerText = JSON.stringify(newRecipeLine);
       getRecipeDetails(recipeLine.recipeName);
-      window.location.href = `http://127.0.0.1:5502/#/recipeLine?`;
+      window.location.href = "http://127.0.0.1:5502/#/recipeLine?";
     })
     .catch(error => console.error(error));
 
@@ -139,7 +139,6 @@ function addRecipeLine() {
   }
 
 
-//!!!!!!!!!!! fjernet async
 export function setupRecipeLineFormHandlers() {
   const addButton = document.getElementById("open-button");
   const closeButton = document.getElementById("btnCancel");
@@ -149,7 +148,7 @@ export function setupRecipeLineFormHandlers() {
 }
 
 function showRecipeLineForm(event) {
-  event.preventDefault(); 
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
   document.getElementById("myForm").style.display = "block";
 
   let ingredientsDropdown = document.getElementById("ingredientsDrop");
@@ -183,7 +182,7 @@ export function handleEditRecipe() {
 }
 
 function openEditPopup(event) {
-  event.preventDefault();
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
   // Få detaljerne om recipe som de er nu
   recipeName = document.querySelector('.recipe-name').textContent;
   const recipeDescription = document.querySelector('.recipe-description').textContent;
@@ -210,7 +209,7 @@ function openEditPopup(event) {
 
 //Bruges hvis man vælger at trykke "save"
 function handleSave(event) {
-  event.preventDefault(); // Sikre der ikke sker automitisk refresh af siden(reload)
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
 
   const updatedDescription = document.getElementById('edit-description').value;
   const updatedMealType = document.getElementById('edit-meal-type').value;
@@ -226,7 +225,7 @@ function handleSave(event) {
     if (res.ok) {
       document.getElementById("save-button").innerText = JSON.stringify(updatedRecipe);
       document.querySelector('.popup-overlay').style.display = 'none';
-      window.location.href = `http://127.0.0.1:5502/#/recipe`; //Redirect, men det virker ikke
+      window.location.href = "http://127.0.0.1:5502/#/recipe"; //Redirect, men det virker ikke
     } else {
       throw new Error("Save request failed");
     }
@@ -237,7 +236,7 @@ function handleSave(event) {
 }
 //Bruges hvis man trykker cancel i popUp formen
 function handleCancel(event) {
-  event.preventDefault(); // Sikre der ikke sker automitisk refresh af siden(reload)
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
   document.querySelector('.popup-overlay').style.display = 'none';
 }
 

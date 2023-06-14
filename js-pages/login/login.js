@@ -9,7 +9,7 @@ export function setupLoginHandlers() {
 }
 
 async function login(event) {
-  event.preventDefault(); //Sikre der ikke sker automitisk refresh af siden(reload)
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
   const credentials = {};
   //Får brugerInput
   credentials.email = document.getElementById("email").value;

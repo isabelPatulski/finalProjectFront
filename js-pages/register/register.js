@@ -9,7 +9,7 @@ export function setupRegisterHandlers() {
 }
 
 function registerUser(event) {
-  event.preventDefault(); // Sikre der ikke sker automitisk refresh af siden(reload)
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
   const user = {};
   //Får og sætter inputs fra user til variabler
   user.email = document.getElementById("input-email").value;

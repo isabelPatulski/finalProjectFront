@@ -149,8 +149,8 @@ export function addRecipeElement() {
 
 
 function addRecipe(event) {
-  event.preventDefault(); //// Sikre der ikke sker automitisk refresh af siden(reload)
-
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
+  
   const recipeName = document.getElementById("recipe-name").value;
   const mealType = document.getElementById("mealTypes").value;
   const recipeDescription = document.getElementById("recipe-description").value;
@@ -174,7 +174,7 @@ function addRecipe(event) {
       const encodedRecipeName = encodeURIComponent(newRecipe.name);
       const params = new URLSearchParams({ name: encodedRecipeName });
 
-      window.location.href = `http://127.0.0.1:5502/#/recipe?${params}`; //Forsøg på redirect men kunne ikke få til at virke
+      window.location.href = "http://127.0.0.1:5502/#/recipe?${params}"; 
     })
     .catch((error) => console.error(error));
 }
@@ -182,7 +182,7 @@ function addRecipe(event) {
 let sortDirection = 1;
 
 function handleSort(event) {
-  event.preventDefault();  // Sikre der ikke sker automitisk refresh af siden(reload)
+  event.preventDefault();  // Sikre der ikke sker automatisk refresh af siden(reload)
 
   const rows = Array.from(document.querySelectorAll(".recipe-row"));
   const sortedRows = rows.sort((a, b) => {

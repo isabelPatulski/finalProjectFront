@@ -106,7 +106,7 @@ function addIngredient() {
     .then((newIngredient) => {
       document.getElementById("saveNewIngredient").innerText = JSON.stringify(newIngredient);
       //Forsøg på redirect, kan ikke få til at virke
-      window.location.href = `http://127.0.0.1:5502/#/ingredients`;
+      window.location.href = "http://127.0.0.1:5502/#/ingredients";
     })
     
     .catch((error) => console.error(error));
@@ -124,7 +124,7 @@ export function setupIngredientFormHandlers() {
 }
 
 function showIngredientForm(event) {
-  event.preventDefault(); // Sikre der ikke sker automitisk refresh af siden(reload)
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
   document.getElementById("myForm").style.display = "block";
 }
 
@@ -135,7 +135,7 @@ function hideIngredientForm() {
 let sortDirection =  1;
 
 function handleSort(event) {
-  event.preventDefault();// Sikre der ikke sker automitisk refresh af siden(reload)
+  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
 
   //Forbereder array
   const rows = Array.from(document.querySelectorAll(".rows-with-ingredients"));
