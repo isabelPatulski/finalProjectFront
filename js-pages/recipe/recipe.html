@@ -13,7 +13,7 @@
             <input type="text" id="recipe-name" required>
             <br>
             <label for="recipe-mealtype">Mealtype:</label>
-            <select name="mealTypes" id="mealTypes" required>
+            <select name="mealTypes" id="mealTypes" required> <!-- Faste værdier at vælge imellem -->
               <option value="Breakfast">Breakfast</option>
               <option value="Lunch">Lunch</option>
               <option value="Dinner">Dinner</option>
@@ -31,7 +31,7 @@
             <span>All recipes</span>
           </h3>
           <table>
-            <thead>
+            <thead> <!-- tabel til recipes -->
               <tr>
                 <th>Name
                 </th>
@@ -43,7 +43,7 @@
               </tr>
             </thead>
             <input type="text" id="searchInput" placeholder="Search...">
-            <tbody id="recipe-list">
+            <tbody id="recipe-list">    <!-- Her placeres de enkelte recipes (til sortering)-->
             </tbody>
           </table>
           <div id="recipeTotalPrice"></div>

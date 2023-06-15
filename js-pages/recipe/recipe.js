@@ -18,35 +18,34 @@ export function getAllRecipes() {
   searchInput.addEventListener("input", handleSearch);
 
   function handleSearch() {
-    //Sørger for input bliver læst i lowerCase
-    const input = searchInput.value.toLowerCase();
-    const rows = document.querySelectorAll("#recipe-list tr");
+    
+    const input = searchInput.value.toLowerCase(); //Sørger for input bliver konvereret til lowerCase
+    const rows = document.querySelectorAll("#recipe-list tr");    // Fortæl queryselector, at den skal bruge "recipe-list" til søgning efter værdier 
 
-    //Retter info fra tabeller til lower case
+    //Retter info fra tabeller til lower case så søgning ikke afhænger af store og små bogstaver
     rows.forEach(row => {
-      const name = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
-      const description = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
-      const mealType = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
-      //Viser resultater der matcher
+      const name = row.querySelector("td:nth-child(1)").textContent.toLowerCase();          //1. søgekolonne er navn
+      const description = row.querySelector("td:nth-child(2)").textContent.toLowerCase();   //2. søgekolonne er description
+      const mealType = row.querySelector("td:nth-child(3)").textContent.toLowerCase();      //3. søgekolonne er mealtype
+      //Viser resultater der matcher, tjek i alle 3 felter/kolonner
       if (name.includes(input) || description.includes(input) || mealType.includes(input)) {
-        row.style.display = "table-row";
+        row.style.display = "table-row";    // Hvis fundet, så vis rækken i tabel
       } else {
-        row.style.display = "none";
+        row.style.display = "none";         // Hvis ikke noget match, så skjul rækken i tabel
       }
     });
   }
 }
-
 
 let deleteButtonId = 1;
 
 function makeRows(rows) {
   const trows = rows
     .map((recipe) => {
-      //Generer delete button med uniq id
+      //Generer delete button med uniq id - 1 for hver linje
       const deleteButtonIdString = `btn-delete-recipe-${deleteButtonId}`;
       deleteButtonId++;
-      //Sørger for "formattedPrice" er i valuta DKK
+      //Sørger for "formattedPrice" vises i valuta DKK
       const formattedPrice = recipe.price.toLocaleString("da-DK", {
         style: "currency",
         currency: "DKK",
@@ -62,36 +61,36 @@ function makeRows(rows) {
       `;
     })
     .join("\n");
-  document.getElementById("recipe-list").innerHTML = trows;
-  //Tilføjer eventhandler til sort function
-  document.getElementById("sort-price").addEventListener("click", handleSort);
-  //Sørger for en eventhandler til hver row med enten delete eller handleRecipe
-  const recipeRows = document.getElementsByClassName("recipe-row");
+
+  document.getElementById("recipe-list").innerHTML = trows;                     // Fyld tabellinjer op med fundne data
+  
+  document.getElementById("sort-price").addEventListener("click", handleSort);  // Tilføj eventhandler til sort function
+  
+  const recipeRows = document.getElementsByClassName("recipe-row");             // Sørg for en eventhandler til hver row med  delete og handleRecipe
   Array.from(recipeRows).forEach((row) => {
     row.addEventListener("click", (event) => handleRecipeRowClick(event));
     const deleteButton = row.querySelector('input[type="button"]');
-  deleteButton.addEventListener("click", (event) => handleDeleteRecipe(event));
+    deleteButton.addEventListener("click", (event) => handleDeleteRecipe(event));
   });
 }
-
 
 
 export async function handleDeleteRecipe(event) {
   if (event.target.nodeName === "INPUT" && event.target.type === "button") {
     const buttonId = event.target.id;
     const row = event.target.parentNode.parentNode;
-    const recipeName = row.querySelector("td:first-child").textContent;
+    const recipeName = row.querySelector("td:first-child").textContent;     // Hent recipe name fra første kolonne - bruges til opslag ved sletning
 
-    const confirmation = confirm("Are you sure you want to delete this recipe?");
+    const confirmation = confirm("Are you sure you want to delete this recipe?");   // Dobbelttjek inden sletning
 
     if (confirmation) {
       try {
-        const response = await fetch(`${URL}/${encodeURIComponent(recipeName)}`, makeOptions("DELETE"));
+        const response = await fetch(`${URL}/${encodeURIComponent(recipeName)}`, makeOptions("DELETE"));  // Kald sletning via REST i backend, med recipename som nøgle
 
         if (response.ok) {
-          row.remove();
+          row.remove();       // Hvis sletning er gået godt, så fjern linje fra tabel
         } else {
-          throw new Error("Delete request failed");
+          throw new Error("Delete request failed"); 
         }
       } catch (error) {
         console.error(error.message);
@@ -151,7 +150,7 @@ export function addRecipeElement() {
 function addRecipe(event) {
   event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
   
-  const recipeName = document.getElementById("recipe-name").value;
+  const recipeName = document.getElementById("recipe-name").value;    // Hent værdier fra dokument/HTML
   const mealType = document.getElementById("mealTypes").value;
   const recipeDescription = document.getElementById("recipe-description").value;
 
@@ -160,21 +159,21 @@ function addRecipe(event) {
     alert("Please fill in all fields.");
     return;
   }
-  //Er lidt i tvivl om hvad der sker her FLEMMMING
-  const recipe = {
+  
+  const recipe = {                    // Klargør objekt til backend med aktuel information hentet ovenfor
     name: recipeName,
     mealType: mealType,
     description: recipeDescription,
   };
 
   //Fetch til backend
-  fetch(URL, makeOptions("POST", recipe))
+  fetch(URL, makeOptions("POST", recipe))   // Send ny recipe til backend
     .then((res) => res.json())
     .then((newRecipe) => {
       const encodedRecipeName = encodeURIComponent(newRecipe.name);
-      const params = new URLSearchParams({ name: encodedRecipeName });
+      const params = new URLSearchParams({ name: encodedRecipeName });    // Recipename er primær nøgle og bruges til opslag som ekstra parameter. Konverter til URL venligt format
 
-      window.location.href = "http://127.0.0.1:5502/#/recipe?${params}"; 
+      window.location.href = "http://127.0.0.1:5502/#/recipe?${params}";  // Spring direkte til den nye recipe efter oprettelse, hvis det er gået godt. Virker ikke endnu
     })
     .catch((error) => console.error(error));
 }
@@ -192,7 +191,7 @@ function handleSort(event) {
   });
 
   sortDirection *= -1;
-  //Flemming -fortår ikke heeeelt hvad der sker
+  
   const recipeList = document.getElementById("recipe-list");
   recipeList.innerHTML = "";
   sortedRows.forEach((row) => {
@@ -205,20 +204,20 @@ function handleSort(event) {
 }
 
 
-export function printRecipe()
-{//Og denne FLEMMING
+export function printRecipe()       // Simpel metode til at vise recipe, ved at åbne et nyt vindue og fyld HTML på denne, med data fra den aktuelle side
+{
   let recipeName = document.getElementById("recipe-name").innerText;
   let printHtml = "<html><head><title>"
   + recipeName+"</title></head><body>"
   + "<div id=RecipeHeader>"
   + "<H1>Recipe: "+recipeName+"</H1><br>"
   + "<H2>Mealtype: "+document.getElementById("meal-type").innerHTML+"</H2><br>"
-  + "<H2>Description: "+document.getElementById("recipe-description").innerHTML+"</H2><br>"
+  + "<H2>Description: "+document.getElementById("recipe-description").innerHTML+"</H2><br>"     
   + "</div>"
-  +document.getElementById("seeRecipeLine").innerHTML
+  +document.getElementById("seeRecipeLine").innerHTML    // Tag bare indhold fra nuværende tabel (linjer) og vis på printside (ikke så pænt, men en hurtig løsning)
   +"</body></html>";
-  var printWindow = window.open("");
-  printWindow.document.write(printHtml);  
-  printWindow.print();
-  printWindow.close();
+  var printWindow = window.open("");              // Åben nyt vindue
+  printWindow.document.write(printHtml);          // Fyld vores HTML på
+  printWindow.print();                            // Åben printfunktion
+  printWindow.close();                            // Efter print, lukkes vindue igen
 }

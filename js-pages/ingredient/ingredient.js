@@ -20,15 +20,15 @@ export function getAllIngredients() {
   function handleSearch() {
     //Søge funtion i tabel
     const input = searchInput.value.toLowerCase(); //Sørger for userInput bliver sat til småt
-    const rows = document.querySelectorAll(".rows-with-ingredients");
+    const rows = document.querySelectorAll(".rows-with-ingredients");   // Fortæl queryselector, at den skal bruge "rows-with-ingredients" (fra makeRows) til søgning efter værdier 
 
-    rows.forEach((row) => {
-      const name = row.dataset.name.toLowerCase();
+    rows.forEach((row) => {                           // Tjek hver linje for match
+      const name = row.dataset.name.toLowerCase();    // søg i værdier i lowercase, så det bliver uafhængigt af store/små bogstaver
       //Alt der matcher input bliver vist i "table-rows"
       if (name.includes(input)) {
-        row.style.display = "table-row";
+        row.style.display = "table-row";    // Hvis match fundet, så vis rækken
       } else {
-        row.style.display = "none";
+        row.style.display = "none";         // Hvis ikke match fundet, så skjul rækken
       }
     });
   }
@@ -41,7 +41,7 @@ function makeRows(rows) {
   const trows = rows
     .map((ingredient) => {
       const deleteButtonIdString = `btn-delete-ingredient-${deleteButtonId}`;
-      deleteButtonId++; //Sørger for der bliver talt én op
+      deleteButtonId++; //Sørger for der bliver talt én op, så hver deletebutton får unik id
       const formattedPrice = ingredient.price.toLocaleString("da-DK", {
         style: "currency",
         currency: "DKK",
@@ -108,10 +108,8 @@ function addIngredient() {
       //Forsøg på redirect, kan ikke få til at virke
       window.location.href = "http://127.0.0.1:5502/#/ingredients";
     })
-    
     .catch((error) => console.error(error));
 }
-
 
 export function setupIngredientFormHandlers() {
   //Definere min open og cancel button til min add ingredient form
@@ -135,18 +133,18 @@ function hideIngredientForm() {
 let sortDirection =  1;
 
 function handleSort(event) {
-  event.preventDefault(); // Sikre der ikke sker automatisk refresh af siden(reload)
+  event.preventDefault();// Sikre der ikke sker automatisk refresh af siden(reload)
 
   //Forbereder array
   const rows = Array.from(document.querySelectorAll(".rows-with-ingredients"));
-  //Definere rækkefølgen der skal sorteres for pris i
+  //Definerer rækkefølgen der skal sorteres for pris i
   const sortedRows = rows.sort((a, b) => {
     const aPrice = parseFloat(a.getAttribute("data-price"));
     const bPrice = parseFloat(b.getAttribute("data-price"));
-    return (aPrice - bPrice) * sortDirection;
+    return (aPrice - bPrice) * sortDirection;   //sortdirection angiver om det er fra mindst til størst eller omvendt
   });
 
-  sortDirection *= -1;
+  sortDirection *= -1;    // Husk at sortere omvendt ved næste tryk
 
   const recipeList = document.getElementById("ingredients-table-body");
   recipeList.innerHTML = "";

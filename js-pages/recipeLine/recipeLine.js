@@ -9,13 +9,12 @@ const URLRecipes = LOCAL_SERVER_URL+"api/recipes"
 
 
 export function getAllRecipeLines(){
-  //Fetch til backend for at kunne hente RecipeLines fra backend
+  //Fetch til backend for at kunne hente RecipeLines fra backend. Kunne evt. laves, så kun linjer for aktuel recipe returneres
   fetch(URL)
   .then(res=>res.json())
   .then(recipeLines=>{
-   //Benytter makeRows functionen 
-  makeRows(recipeLines)
-    
+   //Benytter makeRows functionen til at hente de enkelte linjer fra backend
+    makeRows(recipeLines)    
   })
   .catch(e=>console.error(e))
 }
@@ -23,10 +22,10 @@ export function getAllRecipeLines(){
 let deleteButtonId = 1; 
 
 function makeRows(rows) {
-  //Bruges i recipeDetails (Tror jeg?) Eller bliver variablen bare gemt lokalt? Flemming
+  //Bruges i recipeDetails 
   const recipeName = localStorage.getItem('selectedRecipe');
   //Sørger for de rækker der bliver vist på siden kun er dem der matcher det recipeName der er blevet klikket på
-  const filteredRows = rows.filter(recipeLines => recipeLines.recipeName === recipeName);
+  const filteredRows = rows.filter(recipeLines => recipeLines.recipeName === recipeName);   // Kunne også laves så den filtreres i backend i stedet så det gik hurtigere
 
   let totalPrice = 0;
 
@@ -34,33 +33,33 @@ function makeRows(rows) {
     //Sætter delete button ved hver row
     const deleteButtonIdString = `btn-delete-recipeLine-${deleteButtonId}`;
     deleteButtonId++;
-//Flemming
-const ingredientDetailsPromise = fetch(`${URLIngredients}/${encodeURIComponent(recipeLines.ingredientName)}`)
-.then(res => res.json());
+    
+    const ingredientDetailsPromise = fetch(`${URLIngredients}/${encodeURIComponent(recipeLines.ingredientName)}`)
+    .then(res => res.json());
 
-return ingredientDetailsPromise.then(ingredient => {
-// Beregner prisen 
-const price = ingredient.price * recipeLines.amount;
+    return ingredientDetailsPromise.then(ingredient => {
+      // Beregner pris pr. linje
+      const price = ingredient.price * recipeLines.amount;
       totalPrice += price;
-const formattedPrice = price.toLocaleString("da-DK", {
-      style: "currency",
-      currency: "DKK",
-    });
-return `
-  <tr class="rows-with-recipeLines">
-    <td hidden>${recipeLines.id}</td>
-    <td>${recipeLines.ingredientName}</td>
-    <td>${ingredient.measurementType}</td>
-    <td>${recipeLines.amount}</td>
-    <td hidden>${recipeLines.recipeName}</td>
-    <td style="text-align: right;">${formattedPrice}</td>
-    <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
-  </tr>
+      const formattedPrice = price.toLocaleString("da-DK", {
+        style: "currency",
+        currency: "DKK",
+      });
+      return `
+      <tr class="rows-with-recipeLines">
+        <td hidden>${recipeLines.id}</td>
+        <td>${recipeLines.ingredientName}</td>
+        <td>${ingredient.measurementType}</td>
+        <td>${recipeLines.amount}</td>
+        <td hidden>${recipeLines.recipeName}</td>
+        <td style="text-align: right;">${formattedPrice}</td>
+        <td><input type="button" id="${deleteButtonIdString}" value="Delete"></td>
+      </tr>
       `;
     });
   });
 
-  //VEd ikke om det her overhovedet er nødvendigt mere når nu vi bruger din måde istedet?
+  //Ved ikke om det her overhovedet er nødvendigt mere når nu vi bruger din måde istedet?
   Promise.all(trows).then(htmlRows => {
     const totalPriceField = document.getElementById("recipeTotalPrice");
     totalPriceField.textContent = `Total Price: ${totalPrice.toFixed(2)}`; // Display the total price with two decimal places
@@ -70,32 +69,23 @@ return `
     document.getElementById("recipeLines-rows").addEventListener("click", handleDeleteLine);
   });
 }
-//Igen -skal det bare slettes?
-export function calculateTotalPrice(recipeLines) {
-  let totalPrice = 0;
 
-  recipeLines.forEach(recipeLine => {
-    totalPrice += recipeLine.price * recipeLine.amount;
-  });
 
-  return totalPrice;
-}
 
-//Flemming
 export async function handleDeleteLine(event) {
-  if (event.target.nodeName === "INPUT" && event.target.type === "button") {
-    const confirmed = confirm("Are you sure you want to delete this?");
+  if (event.target.nodeName === "INPUT" && event.target.type === "button") {  
+    const confirmed = confirm("Are you sure you want to delete this?");        
     if (confirmed) {
       try {
-        const row = event.target.closest("tr");
-        const recipeLineID = row.querySelector("td:first-child").textContent;
+        const row = event.target.closest("tr");                                 // Find den række deleteknap ligger på, via closest funktion
+        const recipeLineID = row.querySelector("td:first-child").textContent;   // fra den linje hentes første kolonne, som indeholder ID
 
-        const response = await fetch(`${URL}/${encodeURIComponent(recipeLineID)}`, makeOptions("DELETE"));
+        const response = await fetch(`${URL}/${encodeURIComponent(recipeLineID)}`, makeOptions("DELETE"));    // Slet recepeLine med denne ID via backend kald (med ID som parameter)
 
-        if (response.ok) {
-          row.remove();
+        if (response.ok) {                            // Hvis sletning er gennemført i backend
+          row.remove();                               // fjern linje fra tabel
         } else {
-          throw new Error("Delete request failed");
+          throw new Error("Delete request failed");   
         }
       } catch (error) {
         console.error(error.message);
