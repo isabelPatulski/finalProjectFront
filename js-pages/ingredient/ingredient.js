@@ -74,7 +74,9 @@ async function handleDeleteIngredient(event) {
     const buttonId = event.target.id;
     const row = event.target.parentNode.parentNode;
     const ingredientName = row.querySelector("td:first-child").textContent;
+    const confirmation = confirm("Are you sure you want to delete this ingredient?");   // Dobbelttjek inden sletning
 
+    if (confirmation) {
     try {
       const response = await fetch(`${URL}/${encodeURIComponent(ingredientName)}`, makeOptions("DELETE"));
 
@@ -87,6 +89,7 @@ async function handleDeleteIngredient(event) {
       console.error(error.message);
     }
   }
+}
 }
 
 export function addIngredientElement() {
